@@ -1,0 +1,6 @@
+@Less71_HostAddress = http://localhost:5001
+
+GET {{Less71_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
