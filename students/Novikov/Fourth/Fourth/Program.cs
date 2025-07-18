@@ -3,7 +3,7 @@ using System.Text.Json;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 app.UseStaticFiles();
-const int port = 5118;
+//const int port = 5118;
 app.MapGet("/", () => {
     return Results.Content(
 $@"<!DOCTYPE html>
@@ -22,16 +22,16 @@ $@"<!DOCTYPE html>
 </html", "text/html");
 });
 
-VKController vKController = new VKController();
-RssController cNController = new RssController("https://www.cnews.ru/inc/rss/news.xml");
-RssController aCController = new RssController("https://academcity.org/rss.xml");
-RssController elController = new RssController("https://elementy.ru/rss/news/it");
+VkController vkController = new();
+RssController cNController = new("https://www.cnews.ru/inc/rss/news.xml");
+RssController aCController = new("https://academcity.org/rss.xml");
+RssController elController = new("https://elementy.ru/rss/news/it");
 
-app.MapGet("/vk/", (HttpRequest request) => vKController.GetResult(request));
+app.MapGet("/vk/", (HttpRequest request) => vkController.GetResult(request));
 app.MapGet("/tg/", (HttpRequest request) => GoogleSheetsReader.GetResult(request));
-app.MapGet("/old_base/", (HttpRequest request) => Results.Content(OldBaseReader.CreateHtml(int.Parse(request.Query["year"])), "text/html"));
+//app.MapGet("/old_base/", (HttpRequest request) => Results.Content(OldBaseReader.CreateHtml(int.Parse(request.Query["year"])), "text/html"));
+app.MapGet("/old_base/", (HttpRequest request) => OldBaseReader.GetResult(request));
 app.MapGet("/cnews/", (HttpRequest request) => Results.Content(cNController.CreateHtml(), "text/html"));
 app.MapGet("/academcity/", (HttpRequest request) => Results.Content(aCController.CreateHtml(), "text/html"));
 app.MapGet("/elementy/", (HttpRequest request) => Results.Content(elController.CreateHtml(), "text/html"));
 app.Run();
-//Results.Content(GoogleSheetsReader.CreateHtml(), "text/html"))
