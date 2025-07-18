@@ -33,6 +33,8 @@ public static class HtmlPage
                       <title>{title}</title>
                      </head>
                      <body>
+                     <a href='/'>На главную</a>
+                     <br>
                {snippet}
                </body>
                </html>
@@ -55,15 +57,14 @@ public class SearchResult
     public string title { get; set; } // � �������� �������� 
     public string snippet { get; set; } // �������� snippet 
 }
-public class CNController
+
+public class RssController
 {
     XElement xDB;
-    public CNController()
+    public RssController(string source)
     {
-        xDB = XElement.Load("https://www.cnews.ru/inc/rss/news.xml");
+        xDB = XElement.Load(source);
     }
-    
-
     public string CreateHtml()
     {
         XElement xHtml = new XElement("div",
@@ -100,28 +101,50 @@ public class CNController
             }
             return null;
         })));
-        return HtmlPage.GetHtml("Cnews", xHtml.ToString());
+        return HtmlPage.GetHtml("cnews", xHtml.ToString());
     }
-
 }
 
 public class VKController
 {
     XElement xDB;
     const string rdf = "{http://www.w3.org/1999/02/22-rdf-syntax-ns#}";
+
+
+    public IResult GetResult(HttpRequest request)
+    {
+        int start = int.Parse(request.Query["start"]);
+        int step = int.Parse(request.Query["step"]);
+
+        if (start < 0)
+        {
+            return Results.Redirect($"/vk?start=0&step={step}");
+        }
+
+        return Results.Content(CreateHtml(start, step), "text/html");
+    } 
+
     public string CreateHtml(int start, int step)
     {
+
+        int absPostsCount = 0;
+        int postsCount = 0;
         XElement xHtml = new XElement("div",
         new XElement("a", new XAttribute("href", $"/vk?start={start - step}&step={step}"), "Назад"),
         new XElement("a", new XAttribute("href", $"/vk?start={start + step}&step={step}"), "Вперёд"),
         new XElement("ol",
             xDB.Elements().Select(post =>
             {
-                if (post.Name.LocalName == "post")
+                if (absPostsCount <= start)
                 {
-                    if (Int32.Parse(post.Attribute($"{rdf}about").Value) >= start && Int32.Parse(post.Attribute($"{rdf}about").Value) < start + step)
+                    absPostsCount += 1;
+                    return null;
+                }
+                if (postsCount <= step)
+                {
+                    if (post.Name.LocalName == "post")
                     {
-                        bool emptyPost = post.Elements().Single(x => x.Name.LocalName == "text").Value == "";
+                        postsCount += 1;
                         return new XElement("li", new XAttribute("style", "width: 500px"),
                         new XElement("i", new XAttribute("style", "color: gray"),
                         new XText(new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(post.Elements().Single(x => x.Name.LocalName == "date").Value)).ToShortDateString())),
@@ -141,6 +164,7 @@ public class VKController
                             return null;
                         }));
                     }
+                    return null;
                 }
                 return null;
             })),
@@ -166,15 +190,27 @@ public class VKController
 
 public class GoogleSheetsReader
 {
+    public static IResult GetResult(HttpRequest request)
+    {
+        int start = int.Parse(request.Query["start"]);
+        int step = int.Parse(request.Query["step"]);
+
+        if (start < 0)
+        {
+            return Results.Redirect($"/tg?start=0&step={step}");
+        }
+
+        return Results.Content(CreateHtml(start, step), "text/html");
+    }
     public static string GenerateImage(string file_id)
     {
-        if (file_id == "None") return ""; // �������� �� �������
-        return $"<img src=\"https://drive.google.com/thumbnail?authuser=0&id={file_id}&sz=w1000\" />"; // ������� �����������
+        if (file_id == "None") return "";
+        return $"<img src=\"https://drive.google.com/thumbnail?authuser=0&id={file_id}&sz=w1000\" />";
     }
     public static async Task<APIResults?> Read()
     {
         string spreadsheetId = "12OhmW7UWUHXsOi1mrSyczMs2UBHHcoPKnJ1pt3sFGAI";
-        string range = "����1!A:F";
+        string range = "Лист1!A:F";
         string apiKey = "AIzaSyDqDdzU6h-JUqxxLVXDeoL1ei9FZsj8IXA";
 
         string url = $"https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}?key={apiKey}";
@@ -189,28 +225,42 @@ public class GoogleSheetsReader
 
         }
     }
-    public static string CreateHtml()
+    public static string CreateHtml(int start, int step)
     {
         APIResults? googleResults = Read().Result;
         if (googleResults is null) return "";
-        string html = "<ul";
+        string html = $@"<a href='/tg?start={start - step}&step={step}'>Назад</a>
+        <a href='/tg?start={start + step}&step={step}'>Вперёд</a>
+        <br>
+        <ul>";
+        int absPostsCount = 0;
+        int postsCount = 0;
         foreach (List<string> row in googleResults.values)
         {
-            if (row.Count == 6 && row[0] != "ID")
+            if (absPostsCount <= start)
             {
-                DateTime time = new DateTime(1970, 1, 1).AddSeconds(int.Parse(row[1]));
-                html += $"<li>{row[5]} <i>{time.Date}</i><br>{GenerateImage(row[3])}</li>"; // ����������
+                absPostsCount += 1;
+                continue;
+            }
+            if (postsCount <= step)
+            {
+                if (row.Count == 6 && row[0] != "ID")
+                {
+                    postsCount += 1;
+                    DateTime time = new DateTime(1970, 1, 1).AddSeconds(int.Parse(row[1]));
+                    html += $"<li>{row[5]} <i>{time.Date}</i><br>{GenerateImage(row[3])}</li>";
+                }
             }
         }
 
         html += "</ul>";
 
-        return HtmlPage.GetHtml("�������� ����� ����", html);
+        return HtmlPage.GetHtml("Телеграм канал", html);
     }
 }
 public class APIResults
 {
-    public List<List<string>> values { get; set; } // � ���� ��� �� ������, ��� ��� ��������� ���� values 
+    public List<List<string>> values { get; set; } 
 }
 
 public class OldBaseReader
@@ -233,11 +283,13 @@ public class OldBaseReader
 
         }
     }
-    public static string CreateHtml()
+    public static string CreateHtml(int year)
     {
         APIResults? results = Read().Result;
         if (results is null) return "";
-        string html = "<ul>";
+        string html = $@"<a href='/old_base?year={year - 1}'>Назад</a>
+        <a href='/old_base?year={year + 1}'>Вперёд</a>
+        <ul>";
         foreach (List<string> row in results.values)
         {
             for (int i = 1; i < 13; i++)
@@ -247,16 +299,16 @@ public class OldBaseReader
                     row[i] = "";
                 }
             }
-            if (row.Count > 0 && row[1] != "���" && row[1] != "")
+            if (row.Count > 0 && row[1] != "год" && row[1] != "" && row[1].Split(".")[0] == year.ToString())
             {
                 html += $@"<div style='width: 500px'><li><i>{row[1]}.{row[3]}</i> {row[4]}<br>{row[5]}<br>
 
 <table>
 <thead>
     <tr>
-      <th scope='col'>����������</th>
-      <th scope = 'col'>��������������</th>
-           <th scope = 'col'>������</th>
+      <th scope='col'></th>
+      <th scope = 'col'></th>
+           <th scope = 'col'></th>
           </tr>
         </thead>
 <tbody>
@@ -266,12 +318,12 @@ public class OldBaseReader
          <td>{row[9]}</td>
        </tr>
          </table>
-</div></li>"; // ����������
+</div></li><br>";
             }
         }
 
         html += "</ul>";
 
-        return HtmlPage.GetHtml("������ ���� ������ ����", html);
+        return HtmlPage.GetHtml("Данные старых мастерских", html);
     }
 }
