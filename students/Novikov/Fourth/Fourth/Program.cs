@@ -1,6 +1,5 @@
 using System.Text.Json;
 
-
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 app.UseStaticFiles();
@@ -62,15 +61,6 @@ app.MapGet("/pdf", () => {
     "docs/257.pdf", "document/pdf");
 });
 
-
-
-
-
-
-
-
-
-
 app.MapGet("/entry/{x}/{y}", (int x, String y) => $"���� ���������: \n����� {x} \n������ {y}");
 app.MapGet("/user/{id}", (int id) => Results.Content(Users.GetUser(id), "text/json"));
 app.MapGet("/users/", async (HttpRequest request) =>
@@ -87,11 +77,6 @@ app.MapGet("/users/", async (HttpRequest request) =>
     html += "</ul>";
     return Results.Content(html, "text/html"); // ������� ���������
 });
-
-
-
-
-
 
 app.MapGet("/wikipedia/", async (HttpRequest request) =>
 {
@@ -121,12 +106,10 @@ app.MapGet("/wikipedia/", async (HttpRequest request) =>
         return Results.Content(HtmlPage.GetHtml(title, snippet), "text/html"); // ������� �������
     }
 });
-Controller controller = new Controller();
-app.MapGet("/vk/", (HttpRequest request) => Results.Content(controller.CreateHtml(int.Parse(request.Query["start"]), int.Parse(request.Query["step"])), "text/html"));
-// app.MapGet("/vk/", (HttpRequest request) => Results.Content(controller.CreateHtml(), "text/html"));
-
-//app.MapGet("/vk/", (HttpRequest request) => Results.Content(controller.CreateHtml(), "text/html"));
-
+VKController vKController = new VKController();
+CNController cNController = new CNController();
+app.MapGet("/vk/", (HttpRequest request) => Results.Content(vKController.CreateHtml(int.Parse(request.Query["start"]), int.Parse(request.Query["step"])), "text/html"));
 app.MapGet("/sheets/", (HttpRequest request) => Results.Content(GoogleSheetsReader.CreateHtml(), "text/html"));
 app.MapGet("/old_base/", (HttpRequest request) => Results.Content(OldBaseReader.CreateHtml(), "text/html"));
+app.MapGet("/cnews/", (HttpRequest request) => Results.Content(cNController.CreateHtml(), "text/html"));
 app.Run();

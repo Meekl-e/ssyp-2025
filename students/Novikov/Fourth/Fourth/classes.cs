@@ -29,7 +29,7 @@ public static class HtmlPage
                <!DOCTYPE html>
                 <html lang = 'ru'>
                  <head>
-                     <meta charset = 'UTF-8'>
+                     <meta charset = 'UTF-16'>
                       <title>{title}</title>
                      </head>
                      <body>
@@ -55,114 +55,78 @@ public class SearchResult
     public string title { get; set; } // � �������� �������� 
     public string snippet { get; set; } // �������� snippet 
 }
-
-public class Post
+public class CNController
 {
-    public DateTime date { get; set; }
-    public int id { get; set; }
-    public string text { get; set; } = String.Empty;
-    public string owner { get; set; } = String.Empty;
-    public List<Media> media { get; set; } = new List<Media>(); // ������ �����-�������, ������������� � ����� �����
-}
-public class Media
-{
-    public string id { get; set; } = String.Empty;
-    public int post_id { get; set; } // ID �����, � �������� �������� ������ ����� ����
-    public int width { get; set; }
-    public int height { get; set; }
-    public string uri { get; set; } = String.Empty;
-    public string url { get; set; } = String.Empty;
-
-}
-
-
-public class Controller
-{
-    //const int page = 10;
-    // List<Post> posts = new List<Post>();
-    // List<Media> medias = new List<Media>();
     XElement xDB;
+    public CNController()
+    {
+        xDB = XElement.Load("https://www.cnews.ru/inc/rss/news.xml");
+    }
+    public string CreateHtml()
+    {
+        XElement xHtml = new XElement("div",
+        new XElement("ol",
+        xDB.Elements().Single(x => x.Name.LocalName == "channel").Elements().Select(post =>
+        {
+            if (post.Name.LocalName == "item")
+            {
+                return new XElement("li",
+                new XElement("i", post.Elements().Single(x => x.Name.LocalName == "pubDate").Value),
+                new XElement("br"),
+                new XElement("div", new XAttribute("style", "width:700px"),
+                new XText(post.Elements().Single(x => x.Name.LocalName == "title").Value)),
+                new XElement("br"));
+            }
+            return null;
+        })));
+        return HtmlPage.GetHtml("Cnews", xHtml.ToString());
+    }
+
+}
+
+public class VKController
+{
+    XElement xDB;
+    const string rdf = "{http://www.w3.org/1999/02/22-rdf-syntax-ns#}";
     public string CreateHtml(int start, int step)
     {
-        // if (start < 0) start = 0;
-        // if (finish < 10) finish = 10;
-
         XElement xHtml = new XElement("div",
-        new XElement("a", new XAttribute("href", $"/vk?start={start - page}&finish={finish - page}")),
-        new XElement("a", new XAttribute("href", $"/vk?start={start + page}&finish={finish + page}")),
-            //new XElement("div", new XAttribute("style", "width: 500px"),
+        new XElement("a", new XAttribute("href", $"/vk?start={start - step}&step={step}"), "Назад"),
+        new XElement("a", new XAttribute("href", $"/vk?start={start + step}&step={step}"), "Вперёд"),
+        new XElement("ol",
             xDB.Elements().Select(post =>
             {
                 if (post.Name.LocalName == "post")
                 {
-                    return new XElement("li",  new XAttribute("style", "width: 500px"),
-                    new XElement("i", new XAttribute("style", "color: gray"),
-                    new XText(new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(post.Elements().Single(x => x.Name.LocalName == "date").Value)).ToShortDateString())),
-                    new XElement("br"),
-                    new XText(ConvertBase64(post.Elements().Single(x => x.Name.LocalName == "text").Value)),
-                    new XElement("br"),
-                    xDB.Elements().Select(r =>
+                    if (Int32.Parse(post.Attribute($"{rdf}about").Value) >= start && Int32.Parse(post.Attribute($"{rdf}about").Value) < start + step)
                     {
-                        if (r.Name.LocalName == "media")
+                        bool emptyPost = post.Elements().Single(x => x.Name.LocalName == "text").Value == "";
+                        return new XElement("li", new XAttribute("style", "width: 500px"),
+                        new XElement("i", new XAttribute("style", "color: gray"),
+                        new XText(new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(post.Elements().Single(x => x.Name.LocalName == "date").Value)).ToShortDateString())),
+                        new XElement("br"),
+                        new XText(ConvertBase64(post.Elements().Single(x => x.Name.LocalName == "text").Value)),
+                        new XElement("br"),
+                        xDB.Elements().Select(r =>
                         {
-                            if (r.Elements().Single(x => x.Name.LocalName == "post").Attribute("{http://www.w3.org/1999/02/22-rdf-syntax-ns#}resource").Value == post.Attribute("{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about").Value)
+                            if (r.Name.LocalName == "media")
                             {
-                                return new XElement("img", new XAttribute("src", ConvertBase64(r.Elements().Single(x => x.Name.LocalName == "url").Value)));
+                                if (r.Elements().Single(x => x.Name.LocalName == "post").Attribute($"{rdf}resource").Value == post.Attribute($"{rdf}about").Value)
+                                {
+                                    return new XElement("img", new XAttribute("src", ConvertBase64(r.Elements().Single(x => x.Name.LocalName == "url").Value)));
+                                }
+                                return null;
                             }
                             return null;
-                        }
-                        return null;
-                    }));
+                        }));
+                    }
                 }
-                else
-                {
-                    return null;
-                }
-            }));
-        return HtmlPage.GetHtml("sss", xHtml.ToString());
-            // .Where(x => x.Name.LocalName == "post").Select(post=> new XElement("li", new XAttribute("style", "width: 500px"),
-        // new XElement("i", new XAttribute("style", "color: gray"),
-        // new XText(new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(post.Elements().Single(x => x.Value == "date").Value)).ToShortDateString())),
-        // new XElement("br"),
-        // new XText(ConvertBase64(post.Elements().Single(x => x.Value == "text").ToString()))),
-        // new XElement("br"),
-        // xDB.Elements().Where(x => x.Name.LocalName == "media").Select(media => media.Elements().Single(x => x.Name.LocalName == "post").Attribute("rdf:resource").Value == post.Attribute("rdf:about"))
-        // )));
-
-
-        // new XElement("i", new XAttribute("style", "color: gray"),
-        // .Select(x => x.Elements().Where(x => x.Value == "date").Select(x => new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(x.ToString()))))),
-        // new XElement("br"),
-        // xDB.Elements().Where(x => x.Value == "post").Select(x => x.Elements().Where(x => x.Value =="text").Select(x => ConvertBase64(x.ToString()))),
-        // new XElement("br"),
-        // xDB.Elements().Where(x => x.Value == "media").Where(x => x.Elements().Where(x => x.Value == "post").Where(x => x.Attribute))));
-
-
-//         string html = @$"
-//                      <a href='/vk?start={start - 10}&finish={finish - 10}'>�����</a>
-// <a href='/vk?start={start + 10}&finish={finish + 10}'>�����</a><ol>
-//                             ";
-//         return "";
-        /*
-        for (int i = start; i < finish; i++)
-        //foreach (Post post in posts)
-        {
-            Post post = posts[i];
-            html += $"<li><div style='width: 500px'><i style='color: gray'>{post.date}</i><br>{post.text} </div><br> ";
-            foreach (Media media in post.media) // ��������� ����������
-            {
-                html += $"<img src=\"{media.url}\" />";
-            }
-
-            html += "</li>";
-        }
-
-        html += @$"</ol><a href='/vk?start={start - 10}&finish={finish - 10}'>�����</a>
-<a href='/vk?start={start + 10}&finish={finish + 10}'>�����</a>";
-        return HtmlPage.GetHtml("����� ���������", html);
-        */
+                return null;
+            })),
+        new XElement("a", new XAttribute("href", $"/vk?start={start - step}&step={step}"), "Назад"),
+        new XElement("a", new XAttribute("href", $"/vk?start={start + step}&step={step}"), "Вперёд"));
+        return HtmlPage.GetHtml("База ВКонтакте", xHtml.ToString());
     }
-    
 
     public static string ConvertBase64(string? text)
     {
@@ -172,54 +136,10 @@ public class Controller
         }
         return Encoding.UTF8.GetString(Convert.FromBase64String(text)); // ����������
     }
-    public Controller()
+
+    public VKController()
     {
-        xDB = XElement.Load("data.fog"); // ��������� ���� ������
-        foreach (XElement xElement in xDB.Elements()) // ����������� �� ��������
-        {
-            if (xElement.Name.LocalName == "post") // ���� ������ <post></post>
-            {
-                int idFromBD =
-                    int.Parse(xElement.Attribute("{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about")
-                        .Value); // ����� �������� �������� rdf:about
-                string text = xElement.Element("text").Value; // ����� �������� ����������� �������� <text></text>. 
-                int date = int.Parse(xElement.Element("date")
-                    .Value); // ����� �������� ����������� �������� <date></date>. 
-                string
-                    owner = xElement.Element("owner_id")
-                        .Value; // ����� �������� ����������� �������� <owner_id></owner_id>. 
-
-                posts.Add(new Post()
-                {
-                    date = new DateTime(1970, 1, 1).AddSeconds(date),
-                    id = idFromBD,
-                    owner = owner,
-                    text = ConvertBase64(text)
-                }); // ��������� � ������
-            }
-
-            if (xElement.Name.LocalName == "media")
-            {
-                string idFromBD = (xElement.Attribute("{http://www.w3.org/1999/02/22-rdf-syntax-ns#}about").Value);
-                string url = xElement.Element("url").Value;
-                int post_id = int.Parse(idFromBD.Split('-')[0]); // ����� ID �����
-                string uri = xElement.Element("uri").Value; // ����� ���� �����
-                int width = int.Parse(xElement.Element("width").Value); // ������ ��������
-                int height = int.Parse(xElement.Element("height").Value); // ������ ��������
-                Media media = new Media()
-                { uri = uri, width = width, height = height, post_id = post_id, id = idFromBD, url = ConvertBase64(url) }; // ������� ������
-                foreach (Post p in posts) // ���� ����, � �������� �������� ������ ����
-                {
-                    if (p.id == post_id)
-                    {
-                        p.media.Add(media);
-                        break;
-                    }
-                }
-
-                medias.Add(media);
-            }
-        }
+        xDB = XElement.Load("data.fog");
     }
 }
 
