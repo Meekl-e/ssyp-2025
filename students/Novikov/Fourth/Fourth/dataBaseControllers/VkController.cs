@@ -54,7 +54,7 @@ public class VkController
                             {
                                 if (r.Elements().Single(x => x.Name.LocalName == "post").Attribute($"{rdf}resource")?.Value == post.Attribute($"{rdf}about")?.Value)
                                 {
-                                    return new XElement("img", new XAttribute("src", ConvertBase64(r.Elements().Single(x => x.Name.LocalName == "url").Value)));
+                                    return new XElement("img", new XAttribute("style", "width:500px;"), new XAttribute("src", ConvertBase64(r.Elements().Single(x => x.Name.LocalName == "url").Value)));
                                 }
                                 return null;
                             }

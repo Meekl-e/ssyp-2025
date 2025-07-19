@@ -30,7 +30,43 @@ public class OldBaseReader
         APIResults? result = JsonSerializer.Deserialize<APIResults>(json);
 
         return result;
+    
     }
+
+    public static string CreateField(int rawNum)
+    {
+        APIResults? results = Read().Result;
+        if (results is null) return "";
+        int rowsCount = results.values.Count;
+        int num = rawNum % (rowsCount - 1);
+        List<string> row = results.values[num + 1];
+        string html = "";
+        if (row.Count > 0)
+        {
+            html += @$"<div style='width:500px'>
+                <i>{row[1]}.{row[3]}</i>
+                {row[4]}<br>{row[5]}<br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope='col'></th>
+                            <th scope = 'col'></th>
+                            <th scope = 'col'></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style='width:166px'>{row[7]}</th>
+                            <td style='width:166px'>{row[8]}</td>
+                            <td style='width:166px'>{row[9]}</td>
+                        </tr>
+                </table>
+                </div><br>";
+        }
+        return html;
+    }
+    
+
     public static string CreateHtml(int year)
     {
         APIResults? results = Read().Result;

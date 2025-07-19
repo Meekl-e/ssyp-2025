@@ -43,8 +43,8 @@ public class GoogleSheetsReader
     {
         APIResults? googleResults = Read().Result;
         if (googleResults is null) return "";
-        int rawsCount = googleResults.values.Count();
-        int num = rawNum % (rawsCount - 1);
+        int rowsCount = googleResults.values.Count;
+        int num = rawNum % (rowsCount - 1);
         List<string> row = googleResults.values[num + 1];
         string html = "";
         if (row.Count == 6)
