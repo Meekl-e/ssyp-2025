@@ -2,7 +2,6 @@
 
 public class MainPageContoller
 {
-    VkController vkController = new();
     private readonly Random rand = new();
     public IResult GetResult(HttpRequest request)
     {
@@ -48,9 +47,19 @@ public class MainPageContoller
 
     }
 
-    public string CreateHtml(int vkN, int tgN, int oBN, int cNewsN, int academCN, int elementyN)
+    VkController vkController = new();
+    RssController cNController = new("https://www.cnews.ru/inc/rss/news.xml");
+    RssController aCController = new("https://academcity.org/rss.xml");
+    RssController elController = new("https://elementy.ru/rss/news/it");
+    public string CreateHtml(int vkN, int tgN, int oBN, int cNN, int aCN, int elN)
     {
-        return HtmlPage.GetMainHtml(vkController.CreateField(vkN), GoogleSheetsReader.CreateField(tgN), "", "", "", "");
+        //return HtmlPage.GetHtml("", aCController.CreateField(academCN));
+        return HtmlPage.GetMainHtml(vkController.CreateField(vkN),
+        GoogleSheetsReader.CreateField(tgN),
+        OldBaseReader.CreateField(oBN),
+        cNController.CreateField(cNN),
+        aCController.CreateField(aCN),
+        elController.CreateField(elN));
     }
 
 }
