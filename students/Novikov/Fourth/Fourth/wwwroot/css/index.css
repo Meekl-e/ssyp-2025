@@ -6,19 +6,19 @@
                 font-family: Calibri;
             }
 
-            .article {
+            .my-article {
                 margin: 20px 12px 20px 12px;
             }
-            .art-heading {
+            my-.art-heading {
                 margin-bottom: 14px;
                 margin-top: 14px;
             }
-            .container_w {
+            .my-container_w {
                 display: flex;
                 flex-direction: row;
                 flex-wrap: wrap;
             }
-            .box {
+            .my-box {
                 width: 500px;
                 min-height:500px;
 

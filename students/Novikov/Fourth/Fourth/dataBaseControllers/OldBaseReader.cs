@@ -99,9 +99,11 @@ public class OldBaseReader
                     </thead>
                     <tbody>
                         <tr>
+                        <style class='font-family: Calibri;'>
                             <td style='width:200px'>{row[7]}</th>
                             <td style='width:200px'>{row[8]}</td>
                             <td style='width:200px'>{row[9]}</td>
+                        </style>
                         </tr>
                 </table>
                 </li></div><br>";
