@@ -3,7 +3,7 @@ using System.Text;
 
 public class VkController
 {
-    XElement xDB;
+    readonly XElement xDB;
     const string rdf = "{http://www.w3.org/1999/02/22-rdf-syntax-ns#}";
 
 
@@ -30,7 +30,7 @@ public class VkController
 
         int absPostsCount = 0;
         int postsCount = 0;
-        XElement xHtml = new XElement("div",
+        XElement xHtml = new("div",
         new XElement("a", new XAttribute("href", $"/vk?start={start - step}&step={step}"), "Назад"),
         new XElement("a", new XAttribute("href", $"/vk?start={start + step}&step={step}"), "Вперёд"),
         new XElement("ol",
@@ -56,7 +56,7 @@ public class VkController
                         {
                             if (r.Name.LocalName == "media")
                             {
-                                if (r.Elements().Single(x => x.Name.LocalName == "post").Attribute($"{rdf}resource").Value == post.Attribute($"{rdf}about").Value)
+                                if (r.Elements().Single(x => x.Name.LocalName == "post").Attribute($"{rdf}resource")?.Value == post.Attribute($"{rdf}about")?.Value)
                                 {
                                     return new XElement("img", new XAttribute("src", ConvertBase64(r.Elements().Single(x => x.Name.LocalName == "url").Value)));
                                 }

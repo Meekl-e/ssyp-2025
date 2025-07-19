@@ -29,7 +29,6 @@ RssController elController = new("https://elementy.ru/rss/news/it");
 
 app.MapGet("/vk/", (HttpRequest request) => vkController.GetResult(request));
 app.MapGet("/tg/", (HttpRequest request) => GoogleSheetsReader.GetResult(request));
-//app.MapGet("/old_base/", (HttpRequest request) => Results.Content(OldBaseReader.CreateHtml(int.Parse(request.Query["year"])), "text/html"));
 app.MapGet("/old_base/", (HttpRequest request) => OldBaseReader.GetResult(request));
 app.MapGet("/cnews/", (HttpRequest request) => Results.Content(cNController.CreateHtml(), "text/html"));
 app.MapGet("/academcity/", (HttpRequest request) => Results.Content(aCController.CreateHtml(), "text/html"));

@@ -24,7 +24,7 @@ public class OldBaseReader
 
         string url = $"https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}?key={apiKey}";
 
-        using HttpClient client = new HttpClient();
+        using HttpClient client = new();
         string json = await client.GetStringAsync(url);
 
         APIResults? result = JsonSerializer.Deserialize<APIResults>(json);
@@ -49,24 +49,26 @@ public class OldBaseReader
             }
             if (row.Count > 0 && row[1] != "год" && row[1] != "" && row[1].Split(".")[0] == year.ToString())
             {
-                html += $@"<div style='width: 500px'><li><i>{row[1]}.{row[3]}</i> {row[4]}<br>{row[5]}<br>
-
-<table>
-<thead>
-    <tr>
-      <th scope='col'></th>
-      <th scope = 'col'></th>
-           <th scope = 'col'></th>
-          </tr>
-        </thead>
-<tbody>
-    <tr>
-      <td>{row[7]}</th>
-      <td>{row[8]}</td>
-         <td>{row[9]}</td>
-       </tr>
-         </table>
-</div></li><br>";
+                html += $@"<div style='width:600px'>
+                <li>
+                <i>{row[1]}.{row[3]}</i>
+                {row[4]}<br>{row[5]}<br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope='col'></th>
+                            <th scope = 'col'></th>
+                            <th scope = 'col'></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style='width:200px'>{row[7]}</th>
+                            <td style='width:200px'>{row[8]}</td>
+                            <td style='width:200px'>{row[9]}</td>
+                        </tr>
+                </table>
+                </li></div><br>";
             }
         }
 
