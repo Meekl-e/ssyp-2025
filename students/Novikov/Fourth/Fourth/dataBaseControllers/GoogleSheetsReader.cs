@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Xml.Linq;
 
 public class GoogleSheetsReader
 {
@@ -37,6 +38,24 @@ public class GoogleSheetsReader
         APIResults? result = JsonSerializer.Deserialize<APIResults>(json);
         return result;
     }
+
+    public static string CreateField(int rawNum)
+    {
+        APIResults? googleResults = Read().Result;
+        if (googleResults is null) return "";
+        int rawsCount = googleResults.values.Count();
+        int num = rawNum % (rawsCount - 1);
+        List<string> row = googleResults.values[num + 1];
+        string html = "";
+        if (row.Count == 6)
+        {
+            DateTime time = new DateTime(1970, 1, 1).AddSeconds(int.Parse(row[1]));
+            html = $"{row[5]} <i>{time.Date}</i><br>{GenerateImage(row[3])}";
+        }
+        return html.ToString();
+    }
+
+
     public static string CreateHtml(int start, int step)
     {
         APIResults? googleResults = Read().Result;

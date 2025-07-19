@@ -25,6 +25,45 @@ public class VkController
         return Results.Content(CreateHtml(start, step), "text/html");
     }
 
+    public string CreateField(int rawNum)
+    {
+        int postsCount = xDB.Elements().Where(x => x.Name.LocalName == "post").Count();
+        int num = rawNum % postsCount;
+        int absPostsCount = 0;
+        XElement xHtml = new("div",
+        xDB.Elements().Where(post =>
+        {
+            if (absPostsCount != num)
+            {
+                absPostsCount += 1;
+                return false;
+            }
+            absPostsCount += 1;
+            return true;
+        }).Select(post =>
+        {
+            return new XElement(new XElement("div",
+                        new XElement("i", new XAttribute("style", "color: gray"),
+                        new XText(new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(post.Elements().Single(x => x.Name.LocalName == "date").Value)).ToShortDateString())),
+                        new XElement("br"),
+                        new XText(ConvertBase64(post.Elements().Single(x => x.Name.LocalName == "text").Value)),
+                        new XElement("br"),
+                        xDB.Elements().Select(r =>
+                        {
+                            if (r.Name.LocalName == "media")
+                            {
+                                if (r.Elements().Single(x => x.Name.LocalName == "post").Attribute($"{rdf}resource")?.Value == post.Attribute($"{rdf}about")?.Value)
+                                {
+                                    return new XElement("img", new XAttribute("src", ConvertBase64(r.Elements().Single(x => x.Name.LocalName == "url").Value)));
+                                }
+                                return null;
+                            }
+                            return null;
+                        })));
+        }));
+        return xHtml.ToString();
+    }
+
     public string CreateHtml(int start, int step)
     {
 
