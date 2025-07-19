@@ -1,0 +1,31 @@
+            body {
+                font-family: Calibri;
+            }
+
+            head {
+                font-family: Calibri;
+            }
+
+            .article {
+                margin: 20px 12px 20px 12px;
+            }
+            .art-heading {
+                margin-bottom: 14px;
+                margin-top: 14px;
+            }
+            .container_w {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            .box {
+                width: 500px;
+                min-height:500px;
+
+            }
+            .rubrika {
+                width: 100%;
+                background-color: #ffebb6;
+                font-size: large;
+                color: Black;
+            }
