@@ -44,7 +44,13 @@ class ErshovArchiveView : DefaultView
 
     public IResult GetFieldResult(HttpRequest request)
     {
-        throw new NotImplementedException();
+        if (!int.TryParse(request.Query["num"], out int num))
+        {
+            num = 0;
+            return Results.Redirect($"/ershov_archive_field?num={num}");
+        }
+
+        return Results.Content(ershov_controller.GetOnePost(num), "text/html");
     }
 }
 

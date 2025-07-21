@@ -15,7 +15,7 @@ public static class HtmlPage
         .Replace("{{ title }}", title);
         }
 
-    public static string GetMainHtml(int vk, int tg, int oB, int cNews, int academC, int elementy)
+    public static string GetMainHtml(int vk, int tg, int oB, int cNews, int academC, int elementy, int ershArch)
     {
 
         return File.ReadAllText("wwwroot/htmls/index.html")
@@ -24,7 +24,8 @@ public static class HtmlPage
         .Replace("{{ oB }}", oB.ToString())
         .Replace("{{ cNews }}", cNews.ToString())
         .Replace("{{ academC }}", academC.ToString())
-        .Replace("{{ elementy }}", elementy.ToString());
+        .Replace("{{ elementy }}", elementy.ToString())
+        .Replace("{{ ershArch }}", ershArch.ToString());
     }
 }
 

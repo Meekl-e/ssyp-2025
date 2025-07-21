@@ -51,7 +51,7 @@ public class ErshovArchiveController
 
     public string CreateHtml(int start, int step)
     {
-        string html = File.ReadAllText("wwwroot/htmls/2.html");
+        string html = File.ReadAllText("wwwroot/htmls/databasePage.html");
         string ul_string = "<ul>";
 
         ul_string += this.database.Skip(start).Take(step).Select(x => $"<li><img src='{x.url_docs.FirstOrDefault()}'/> {x.description}</li>").Aggregate((a, o) => a + o);
@@ -74,16 +74,6 @@ public class ErshovArchiveController
         return html.Replace("{{ list_docs }}", ul_string);
     }
 
-    public IResult GetFieldResult(HttpRequest request)
-    {
-        if (!int.TryParse(request.Query["num"], out int num))
-        {
-            num = 0;
-            return Results.Redirect($"/vk_field?num={num}");
-        }
-
-        return Results.Content(GetOnePost(num), "text/html");
-    }
        public string GetOnePost(int num)
     {
         var o = this.database.Skip(num - 1).First();

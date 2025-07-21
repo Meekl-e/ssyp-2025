@@ -40,11 +40,16 @@ class MainPageView : DefaultView
             elementyN = rand.Next();
             redirect = true;
         }
+        if (!int.TryParse(request.Query["ershArch"], out int ershArch))
+        {
+            ershArch = rand.Next(1, 100); // add abs random
+            redirect = true;
+        }
         if (redirect)
         {
-            return Results.Redirect($"/?vkN={vkN}&tgN={tgN}&oBN={oBN}&cNewsN={cNewsN}&academCN={academCN}&elementyN={elementyN}");
+            return Results.Redirect($"/?vkN={vkN}&tgN={tgN}&oBN={oBN}&cNewsN={cNewsN}&academCN={academCN}&elementyN={elementyN}&ershArch={ershArch}");
         }
-        return Results.Content(mainPageContoller.CreateHtml(vkN, tgN, oBN, cNewsN, academCN, elementyN), "text/html");
+        return Results.Content(mainPageContoller.CreateHtml(vkN, tgN, oBN, cNewsN, academCN, elementyN, ershArch), "text/html");
     }
     
     public IResult GetFieldResult(HttpRequest request)

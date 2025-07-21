@@ -10,25 +10,6 @@ NestorMorph morph = new();
 MainPageView mainPageView = new();
 app.MapGet("/", (HttpRequest request) => mainPageView.GetResult(request));
 
-//const int port = 5118;
-// app.MapGet("/", () => {
-//     return Results.Content(
-// $@"<!DOCTYPE html>
-// <html>
-//     <head><meta charset='utf-8'>    </head>
-//     <body>
-// <ul>
-//         <li><a href='/vk?start=0&step=10'> Посты ВКонтакте ЛШЮПа </a>
-//         <li><a href='/old_base?year=2017'> Старые мастерские ЛШЮПа </a>
-//         <li><a href='/cnews'> cnews </a>
-//         <li><a href='/academcity'> academcity </a>
-//         <li><a href='/elementy'> elementy </a>
-//         <li><a href='/tg?start=0&step=10'> Телеграм ЛШЮПа </a>
-// <ul>
-//     </body>
-// </html", "text/html");
-// });
-
 VkView vkView = new();
 app.MapGet("/vk/", (HttpRequest request) => vkView.GetResult(request));
 app.MapGet("/vk_field/", (HttpRequest request) => vkView.GetFieldResult(request));
@@ -55,7 +36,7 @@ app.MapGet("/elementy_field/", (HttpRequest request) => elView.GetFieldResult(re
 
 ErshovArchiveView ershovArchive = new(morph);
 app.MapGet("/ershov_archive/", (HttpRequest request) => ershovArchive.GetResult(request));
-// app.MapGet("/old_base_field/", (HttpRequest request) => OldBaseReader.GetFieldResult(request));
+app.MapGet("/ershov_archive_field/", (HttpRequest request) => ershovArchive.GetFieldResult(request));
 
 app.MapGet("/search/", (HttpRequest request) => ershovArchive.GetResult(request));
 
