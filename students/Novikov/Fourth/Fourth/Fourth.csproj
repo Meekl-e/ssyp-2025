@@ -15,4 +15,8 @@
     <Folder Include="wwwroot\docs\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Nestor" Version="0.5.2" />
+  </ItemGroup>
+
 </Project>

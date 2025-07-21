@@ -1,8 +1,11 @@
 using System.Text.Json;
+using Nestor;
 
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 app.UseStaticFiles();
+
+NestorMorph morph = new();
 
 MainPageContoller mainPageContoller = new();
 app.MapGet("/", (HttpRequest request) => mainPageContoller.GetResult(request));
@@ -47,5 +50,11 @@ app.MapGet("/academcity_field/", (HttpRequest request) =>aCController.GetFieldRe
 RssController elController = new("https://elementy.ru/rss/news/it");
 app.MapGet("/elementy/", (HttpRequest request) => Results.Content(elController.CreateHtml(), "text/html"));
 app.MapGet("/elementy_field/", (HttpRequest request) => elController.GetFieldResult(request, "elementy"));
+
+ErshovArchiveView ershovArchive = new(morph);
+app.MapGet("/ershov_archive/", (HttpRequest request) => ershovArchive.GetResult(request));
+// app.MapGet("/old_base_field/", (HttpRequest request) => OldBaseReader.GetFieldResult(request));
+
+app.MapGet("/search/", (HttpRequest request) => ershovArchive.GetResult(request));
 
 app.Run();

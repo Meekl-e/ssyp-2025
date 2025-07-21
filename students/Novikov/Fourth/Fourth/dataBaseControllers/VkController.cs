@@ -72,7 +72,7 @@ public class VkController
                             return null;
                         })));
         }));
-        return HtmlPage.GetHtml1("", xHtml.ToString());
+        return HtmlPage.GetField("", xHtml.ToString());
     }
 
     public string CreateHtml(int start, int step)
@@ -135,6 +135,6 @@ public class VkController
 
     public VkController()
     {
-        xDB = XElement.Load("data.fog");
+        xDB = XElement.Load("datasets/data.fog");
     }
 }
