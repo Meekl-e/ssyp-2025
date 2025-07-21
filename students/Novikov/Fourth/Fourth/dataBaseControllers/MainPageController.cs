@@ -54,12 +54,7 @@ public class MainPageContoller
     public string CreateHtml(int vkN, int tgN, int oBN, int cNN, int aCN, int elN)
     {
         //return HtmlPage.GetHtml("", aCController.CreateField(academCN));
-        return HtmlPage.GetMainHtml(vkController.CreateField(vkN),
-        GoogleSheetsReader.CreateField(tgN),
-        OldBaseReader.CreateField(oBN),
-        cNController.CreateField(cNN),
-        aCController.CreateField(aCN),
-        elController.CreateField(elN));
+        return HtmlPage.GetMainHtml(vkN, tgN, oBN, cNN, aCN, elN);
     }
 
 }

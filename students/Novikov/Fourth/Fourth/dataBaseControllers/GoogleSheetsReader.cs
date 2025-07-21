@@ -20,6 +20,17 @@ public class GoogleSheetsReader
 
         return Results.Content(CreateHtml(start, step), "text/html");
     }
+
+    public static IResult GetFieldResult(HttpRequest request)
+    {
+        if (!int.TryParse(request.Query["num"], out int num))
+        {
+            num = 0;
+            return Results.Redirect($"/tg_field?num={num}");
+        }
+        return Results.Content(CreateField(num), "text/html");
+    }
+
     public static string GenerateImage(string file_id)
     {
         if (file_id == "None") return "";

@@ -25,6 +25,17 @@ public class VkController
         return Results.Content(CreateHtml(start, step), "text/html");
     }
 
+    public IResult GetFieldResult(HttpRequest request)
+    {
+        if (!int.TryParse(request.Query["num"], out int num))
+        {
+            num = 0;
+            return Results.Redirect($"/vk_field?num={num}");
+        }
+
+        return Results.Content(CreateField(num), "text/html");
+    }
+
     public string CreateField(int rawNum)
     {
         int postsCount = xDB.Elements().Where(x => x.Name.LocalName == "post").Count();
@@ -61,7 +72,7 @@ public class VkController
                             return null;
                         })));
         }));
-        return xHtml.ToString();
+        return HtmlPage.GetHtml("", xHtml.ToString());
     }
 
     public string CreateHtml(int start, int step)

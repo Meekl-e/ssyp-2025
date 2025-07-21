@@ -2,6 +2,17 @@ using System.Xml.Linq;
 
 public class RssController
 {
+
+    public IResult GetFieldResult(HttpRequest request, string source)
+    {
+        if (!int.TryParse(request.Query["num"], out int num))
+        {
+            num = 0;
+            return Results.Redirect($"/{source}_field?num={num}");
+        }
+        return Results.Content(CreateField(num), "text/html");
+    }
+
     XElement xDB;
     public RssController(string source)
     {
