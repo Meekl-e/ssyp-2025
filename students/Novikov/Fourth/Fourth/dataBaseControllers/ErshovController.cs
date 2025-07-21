@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Xml.Linq;
 using Nestor;
 
 
@@ -43,7 +44,6 @@ public class ErshovArchiveController
 
 
 
-
     public IEnumerable<DocObject> GetDocs(int amount = 10)
     {
         return this.database.Where(x => x.type == "Фотографии").Take(amount);
@@ -73,6 +73,24 @@ public class ErshovArchiveController
         ul_string += "</ul>";
         return html.Replace("{{ list_docs }}", ul_string);
     }
+
+    public IResult GetFieldResult(HttpRequest request)
+    {
+        if (!int.TryParse(request.Query["num"], out int num))
+        {
+            num = 0;
+            return Results.Redirect($"/vk_field?num={num}");
+        }
+
+        return Results.Content(GetOnePost(num), "text/html");
+    }
+       public string GetOnePost(int num)
+    {
+        var o = this.database.Skip(num - 1).First();
+        
+        return $"<li>{o.description}</li>";
+    }
+
         
     
 }
