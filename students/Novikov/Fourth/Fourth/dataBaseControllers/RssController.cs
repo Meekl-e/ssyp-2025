@@ -30,7 +30,7 @@ public class RssController
             return new XElement("div",
             new XElement("i", item.Elements().Single(x => x.Name.LocalName == "pubDate").Value),
             new XElement("br"),
-            new XElement("div", new XAttribute("style", "width:700px"),
+            new XElement("div", new XAttribute("class", "content12"),
             new XText(item.Elements().Single(x => x.Name.LocalName == "title").Value),
             new XElement("br"),
             new XElement("a", new XAttribute("href", item.Elements().Single(x => x.Name.LocalName == "link").Value), item.Elements().Single(x => x.Name.LocalName == "description").Value.Where(xChar =>

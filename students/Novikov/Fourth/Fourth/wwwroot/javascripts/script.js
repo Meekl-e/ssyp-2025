@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             dark_theme = true;
             document.body.style.color = 'black'
-            document.body.style.backgroundColor = 'white'
+            document.body.style.backgroundColor = '#ffffd8'
 
         }
     });
