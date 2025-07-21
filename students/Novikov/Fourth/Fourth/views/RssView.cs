@@ -30,7 +30,7 @@ public class RssView : DefaultView
         {
             return Results.Content(elController.CreateField(num), "text/html");
         }
-        return Results.Content(HtmlPage.GetHtml("", "Ошибка поиска"), "text/html");
+        return Results.Content(HtmlPage.GetHtml("", source), "text/html");
     }
 
 

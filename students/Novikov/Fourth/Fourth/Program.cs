@@ -41,15 +41,15 @@ OldBaseView oldBaseView = new();
 app.MapGet("/old_base/", (HttpRequest request) => oldBaseView.GetResult(request));
 app.MapGet("/old_base_field/", (HttpRequest request) => oldBaseView.GetFieldResult(request));
 
-RssView cNView = new("https://www.cnews.ru/inc/rss/news.xml");
+RssView cNView = new("cnews");
 app.MapGet("/cnews/", (HttpRequest request) => cNView.GetResult(request));
 app.MapGet("/cnews_field/", (HttpRequest request) => cNView.GetFieldResult(request));
 
-RssView aCView = new("https://academcity.org/rss.xml");
+RssView aCView = new("academcity");
 app.MapGet("/academcity/", (HttpRequest request) => aCView.GetResult(request));
 app.MapGet("/academcity_field/", (HttpRequest request) =>aCView.GetFieldResult(request));
 
-RssView elView = new("https://elementy.ru/rss/news/it");
+RssView elView = new("elementy");
 app.MapGet("/elementy/", (HttpRequest request) => elView.GetResult(request));
 app.MapGet("/elementy_field/", (HttpRequest request) => elView.GetFieldResult(request));
 
