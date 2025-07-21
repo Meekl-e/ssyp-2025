@@ -19,9 +19,10 @@ public static class HtmlPage
                ";
     }
 
-    public static string GetMainHtml(string vk, string tg, string oB, string cNews, string academC, string elementy)
+    public static string GetMainHtml(int vk, int tg, int oB, int cNews, int academC, int elementy)
     {
-        return File.ReadAllText(@"C:\Users\programmer\Documents\Pirogov_Anton\ssyp-2025\students\Novikov\Fourth\Fourth\utils\index.html");
+
+        return File.ReadAllText(Directory.GetCurrentDirectory()+ @"\wwwroot\htmls\index.html");
     }
 }
 
