@@ -15,6 +15,16 @@ public class OldBaseReader
 
         return Results.Content(CreateHtml(year), "text/html");
     }
+    
+    public static IResult GetFieldResult(HttpRequest request)
+    {
+        if (!int.TryParse(request.Query["num"], out int num))
+        {
+            num = 0;
+            return Results.Redirect($"/old_base_field?num={num}");
+        }
+        return Results.Content(CreateField(num), "text/html");
+    }
 
     public static async Task<APIResults?> Read()
     {
@@ -30,7 +40,7 @@ public class OldBaseReader
         APIResults? result = JsonSerializer.Deserialize<APIResults>(json);
 
         return result;
-    
+
     }
 
     public static string CreateField(int rawNum)
@@ -56,9 +66,11 @@ public class OldBaseReader
                     </thead>
                     <tbody>
                         <tr>
-                            <td style='width:166px'>{row[7]}</th>
-                            <td style='width:166px'>{row[8]}</td>
-                            <td style='width:166px'>{row[9]}</td>
+                        <style class='font-family: Calibri;'>
+                            <td style='width:200px'>{row[7]}</th>
+                            <td style='width:200px'>{row[8]}</td>
+                            <td style='width:200px'>{row[9]}</td>
+                        </style>
                         </tr>
                 </table>
                 </div><br>";
@@ -99,11 +111,9 @@ public class OldBaseReader
                     </thead>
                     <tbody>
                         <tr>
-                        <style class='font-family: Calibri;'>
                             <td style='width:200px'>{row[7]}</th>
                             <td style='width:200px'>{row[8]}</td>
                             <td style='width:200px'>{row[9]}</td>
-                        </style>
                         </tr>
                 </table>
                 </li></div><br>";
