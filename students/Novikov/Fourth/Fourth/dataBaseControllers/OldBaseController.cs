@@ -1,31 +1,8 @@
 using System.Text.Json;
 
-public class OldBaseReader
+public class OldBaseController
 {
-    public static IResult GetResult(HttpRequest request)
-    {
-        if (!int.TryParse(request.Query["year"], out int year))
-        {
-            year = 2017;
-        }
-        if (year > 2017)
-        {
-            return Results.Redirect("/old_base?year=2017");
-        }
-
-        return Results.Content(CreateHtml(year), "text/html");
-    }
     
-    public static IResult GetFieldResult(HttpRequest request)
-    {
-        if (!int.TryParse(request.Query["num"], out int num))
-        {
-            num = 0;
-            return Results.Redirect($"/old_base_field?num={num}");
-        }
-        return Results.Content(CreateField(num), "text/html");
-    }
-
     public static async Task<APIResults?> Read()
     {
         string spreadsheetId = "1NmIcu_vEI8ETwqaO1nHbaIykiko6vtB2tQaKTeQ7YiE";
@@ -36,11 +13,9 @@ public class OldBaseReader
 
         using HttpClient client = new();
         string json = await client.GetStringAsync(url);
-
         APIResults? result = JsonSerializer.Deserialize<APIResults>(json);
 
         return result;
-
     }
 
     public static string CreateField(int rawNum)
@@ -119,7 +94,6 @@ public class OldBaseReader
                 </li></div><br>";
             }
         }
-
         html += "</ul>";
 
         return HtmlPage.GetHtml("Данные старых мастерских", html);

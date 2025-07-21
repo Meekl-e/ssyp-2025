@@ -7,8 +7,8 @@ app.UseStaticFiles();
 
 NestorMorph morph = new();
 
-MainPageContoller mainPageContoller = new();
-app.MapGet("/", (HttpRequest request) => mainPageContoller.GetResult(request));
+MainPageView mainPageView = new();
+app.MapGet("/", (HttpRequest request) => mainPageView.GetResult(request));
 
 //const int port = 5118;
 // app.MapGet("/", () => {
@@ -29,27 +29,29 @@ app.MapGet("/", (HttpRequest request) => mainPageContoller.GetResult(request));
 // </html", "text/html");
 // });
 
-VkController vkController = new();
-app.MapGet("/vk/", (HttpRequest request) => vkController.GetResult(request));
-app.MapGet("/vk_field/", (HttpRequest request) => vkController.GetFieldResult(request));
+VkView vkView = new();
+app.MapGet("/vk/", (HttpRequest request) => vkView.GetResult(request));
+app.MapGet("/vk_field/", (HttpRequest request) => vkView.GetFieldResult(request));
 
-app.MapGet("/tg/", (HttpRequest request) => GoogleSheetsReader.GetResult(request));
-app.MapGet("/tg_field/", (HttpRequest request) => GoogleSheetsReader.GetFieldResult(request));
+TgView tgView = new();
+app.MapGet("/tg/", (HttpRequest request) => tgView.GetResult(request));
+app.MapGet("/tg_field/", (HttpRequest request) => tgView.GetFieldResult(request));
 
-app.MapGet("/old_base/", (HttpRequest request) => OldBaseReader.GetResult(request));
-app.MapGet("/old_base_field/", (HttpRequest request) => OldBaseReader.GetFieldResult(request));
+OldBaseView oldBaseView = new();
+app.MapGet("/old_base/", (HttpRequest request) => oldBaseView.GetResult(request));
+app.MapGet("/old_base_field/", (HttpRequest request) => oldBaseView.GetFieldResult(request));
 
-RssController cNController = new("https://www.cnews.ru/inc/rss/news.xml");
-app.MapGet("/cnews/", (HttpRequest request) => Results.Content(cNController.CreateHtml(), "text/html"));
-app.MapGet("/cnews_field/", (HttpRequest request) => cNController.GetFieldResult(request, "cnews"));
+RssView cNView = new("https://www.cnews.ru/inc/rss/news.xml");
+app.MapGet("/cnews/", (HttpRequest request) => cNView.GetResult(request));
+app.MapGet("/cnews_field/", (HttpRequest request) => cNView.GetFieldResult(request));
 
-RssController aCController = new("https://academcity.org/rss.xml");
-app.MapGet("/academcity/", (HttpRequest request) => Results.Content(aCController.CreateHtml(), "text/html"));
-app.MapGet("/academcity_field/", (HttpRequest request) =>aCController.GetFieldResult(request, "academcity"));
+RssView aCView = new("https://academcity.org/rss.xml");
+app.MapGet("/academcity/", (HttpRequest request) => aCView.GetResult(request));
+app.MapGet("/academcity_field/", (HttpRequest request) =>aCView.GetFieldResult(request));
 
-RssController elController = new("https://elementy.ru/rss/news/it");
-app.MapGet("/elementy/", (HttpRequest request) => Results.Content(elController.CreateHtml(), "text/html"));
-app.MapGet("/elementy_field/", (HttpRequest request) => elController.GetFieldResult(request, "elementy"));
+RssView elView = new("https://elementy.ru/rss/news/it");
+app.MapGet("/elementy/", (HttpRequest request) => elView.GetResult(request));
+app.MapGet("/elementy_field/", (HttpRequest request) => elView.GetFieldResult(request));
 
 ErshovArchiveView ershovArchive = new(morph);
 app.MapGet("/ershov_archive/", (HttpRequest request) => ershovArchive.GetResult(request));

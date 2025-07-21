@@ -1,35 +1,8 @@
 using System.Text.Json;
 using System.Xml.Linq;
 
-public class GoogleSheetsReader
+public class TgController
 {
-    public static IResult GetResult(HttpRequest request)
-    {
-        if (!int.TryParse(request.Query["start"], out int start))
-        {
-            start = 0;
-        }
-        if (!int.TryParse(request.Query["step"], out int step))
-        {
-            step = 10;
-        }
-        if (start < 0)
-        {
-            return Results.Redirect($"/tg?start=0&step={step}");
-        }
-
-        return Results.Content(CreateHtml(start, step), "text/html");
-    }
-
-    public static IResult GetFieldResult(HttpRequest request)
-    {
-        if (!int.TryParse(request.Query["num"], out int num))
-        {
-            num = 0;
-            return Results.Redirect($"/tg_field?num={num}");
-        }
-        return Results.Content(CreateField(num), "text/html");
-    }
 
     public static string GenerateImage(string file_id)
     {
@@ -66,7 +39,6 @@ public class GoogleSheetsReader
         return html.ToString();
     }
 
-
     public static string CreateHtml(int start, int step)
     {
         APIResults? googleResults = Read().Result;
@@ -94,7 +66,6 @@ public class GoogleSheetsReader
                 }
             }
         }
-
         html += "</ul>";
 
         return HtmlPage.GetHtml("Телеграм канал", html);

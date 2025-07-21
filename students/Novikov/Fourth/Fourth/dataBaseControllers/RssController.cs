@@ -3,16 +3,6 @@ using System.Xml.Linq;
 public class RssController
 {
 
-    public IResult GetFieldResult(HttpRequest request, string source)
-    {
-        if (!int.TryParse(request.Query["num"], out int num))
-        {
-            num = 0;
-            return Results.Redirect($"/{source}_field?num={num}");
-        }
-        return Results.Content(CreateField(num), "text/html");
-    }
-
     XElement xDB;
     public RssController(string source)
     {
@@ -24,7 +14,7 @@ public class RssController
         int itemsCount = xDB.Elements().Single(x => x.Name.LocalName == "channel").Elements().Where(x => x.Name.LocalName == "item").Count();
         int num = rawNum % itemsCount;
         int absItemsCount = 0;
-        XElement xHtml = new("div", new XAttribute("aaaa", num),
+        XElement xHtml = new("div",
         xDB.Elements().Single(x => x.Name.LocalName == "channel").Elements().Where(x => x.Name.LocalName == "item").Where(item =>
         {
             if (absItemsCount != num)
