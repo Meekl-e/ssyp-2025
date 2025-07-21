@@ -34,7 +34,7 @@ public class GoogleSheetsReader
     public static string GenerateImage(string file_id)
     {
         if (file_id == "None") return "";
-        return $"<img src=\"https://drive.google.com/thumbnail?authuser=0&id={file_id}&sz=w1000\" />";
+        return $"<img style='width:465px;' src=\"https://drive.google.com/thumbnail?authuser=0&id={file_id}&sz=w1000\" />";
     }
     public static async Task<APIResults?> Read()
     {

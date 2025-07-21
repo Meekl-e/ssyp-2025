@@ -21,8 +21,13 @@
             .my-box {
                 width: 500px;
                 min-height:500px;
+            }
+
+            .iframe_image {
+                width: 480px;
 
             }
+
             .rubrika {
                 width: 100%;
                 background-color: #ffebb6;
