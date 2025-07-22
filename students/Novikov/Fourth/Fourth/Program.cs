@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 app.UseStaticFiles();
 
-NestorMorph morph = new();
+NestorMorph morph = null;
 
 MainPageView mainPageView = new();
 app.MapGet("/", (HttpRequest request) => mainPageView.GetResult(request));

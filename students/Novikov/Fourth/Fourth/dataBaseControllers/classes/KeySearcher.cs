@@ -43,8 +43,8 @@ public class WordsSearcher<D, K>
     public (D, int)[] Search(string[] words)
     {
 
-
-        var query = words.Select(w => morph.Lemmatize(w)[0]).SelectMany(w => { if (wordToKeys.TryGetValue(w, out K[] karr)) return karr; else return new K[0]; })
+        // .Select(w => morph.Lemmatize(w)[0])
+        var query = words.SelectMany(w => { if (wordToKeys.TryGetValue(w, out K[] karr)) return karr; else return new K[0]; })
             .GroupBy(k => k)
             .Select(igr => (igr.Key, igr.Count()))
             .OrderByDescending(k => k.Item2)
@@ -92,7 +92,7 @@ class DataSourceList : IDataSource<string, int>
 
     public Func<Tuple<string, NestorMorph>, IEnumerable<string>> GetDWFunc() // преобразователь документа в поток строк
     {
-        return (Tuple<string, NestorMorph> tuple) => tuple.Item1.Split(" ").Distinct().Select(w => tuple.Item2.Lemmatize(w).FirstOrDefault()).Where(x=>x!=null);
+        return (Tuple<string, NestorMorph> tuple) => tuple.Item1.Split(" ").Distinct();//.Select(w => tuple.Item2.Lemmatize(w).FirstOrDefault()).Where(x=>x!=null);
     }
 
     public string GetElement(int key)
