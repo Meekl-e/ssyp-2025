@@ -39,4 +39,11 @@ app.MapGet("/ershov_archive_field/", (HttpRequest request) => ershovArchive.GetF
 
 app.MapGet("/search/", (HttpRequest request) => ershovArchive.GetResult(request));
 
+View view = new();
+app.MapGet("/syp_search", (HttpRequest request) => view.GetResult(request));
+
+app.MapGet("/person", (HttpRequest request) => view.GetPersonResult(request));
+
+app.MapGet("/studio", (HttpRequest request) => view.GetStudioResult(request));
+
 app.Run();
