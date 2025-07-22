@@ -39,14 +39,12 @@ public class ErshovArchiveController
             return o;
         }).ToList();
         
-        this.scans = null;
         file_content = "";
 
         // this.dict_docs = this.database.ToDictionary(x => x.id);
 
         DataSourceList dsl = new DataSourceList([.. database.Select(o => o.description)]);
         this.searcher = new WordsSearcher<string, int>(dsl, nestorMorph);
-        dsl = null;
 
         Console.WriteLine("Loaded");
 

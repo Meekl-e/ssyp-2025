@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Nestor;
+using System.Text.Json;
 
 class ErshovArchiveView : DefaultView
 {
@@ -16,17 +17,20 @@ class ErshovArchiveView : DefaultView
 
     }
 
-    public IResult GetResult(HttpRequest request)
-    {
-        if (request.Query.ContainsKey("search"))
-        {
-            string query_search = request.Query["search"];
+    public IResult Search(HttpRequest request){
+        if (request.Form.ContainsKey("search")){
+            string query_search = request.Form["search"];
             if (query_search != null || query_search != "")
             {
                 return Results.Content(ershov_controller.Search(query_search), "text/json");
             }
-            return Results.Content("Ошибка поиска", "text/plain");;
         }
+        return Results.Content(JsonSerializer.Serialize(""), "text/json");
+
+    }
+
+    public IResult GetResult(HttpRequest request)
+    {
         if (!int.TryParse(request.Query["start"], out int start))
         {
             start = 0;
