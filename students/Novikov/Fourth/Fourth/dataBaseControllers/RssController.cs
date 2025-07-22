@@ -9,10 +9,13 @@ public class RssController
         xDB = XElement.Load(source);
     }
 
-    public string CreateField(int rawNum)
+    public int GetCount()
     {
-        int itemsCount = xDB.Elements().Single(x => x.Name.LocalName == "channel").Elements().Where(x => x.Name.LocalName == "item").Count();
-        int num = rawNum % itemsCount;
+        return xDB.Elements().Single(x => x.Name.LocalName == "channel").Elements().Where(x => x.Name.LocalName == "item").Count();
+    }
+
+    public string CreateField(int num)
+    {
         int absItemsCount = 0;
         XElement xHtml = new("div",
         xDB.Elements().Single(x => x.Name.LocalName == "channel").Elements().Where(x => x.Name.LocalName == "item").Where(item =>

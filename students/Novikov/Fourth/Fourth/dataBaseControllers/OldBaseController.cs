@@ -2,6 +2,20 @@ using System.Text.Json;
 
 public class OldBaseController
 {
+
+    public static List<int> GetIds()
+    {
+        APIResults? results = Read().Result;
+        List<int> ids = new();
+        foreach (List<string> row in results.values)
+        {
+            if (row.Count > 0 && row[1] != "год" && row[1] != "")
+            {
+                ids.Add(Int32.Parse(row[0]));
+            }
+        }
+        return ids;
+    }
     
     public static async Task<APIResults?> Read()
     {
@@ -18,17 +32,23 @@ public class OldBaseController
         return result;
     }
 
-    public static string CreateField(int rawNum)
+    public static string CreateField(int id)
     {
         APIResults? results = Read().Result;
         if (results is null) return "";
-        int rowsCount = results.values.Count;
-        int num = rawNum % (rowsCount - 1);
-        List<string> row = results.values[num + 1];
         string html = "";
-        if (row.Count > 0)
+        foreach (List<string> row in results.values)
         {
-            html += @$"<div style='width:500px'>
+            for (int i = 1; i < 13; i++)
+            {
+                if (row[i] == "NoneValue")
+                {
+                    row[i] = "";
+                }
+            }
+            if (row.Count > 0 && row[1] != "год" && row[1] != "" && row[0] == id.ToString())
+            {
+                html += @$"<div style='width:470px'>
                 <i>{row[1]}.{row[3]}</i>
                 {row[4]}<br>{row[5]}<br>
                 <table>
@@ -42,13 +62,14 @@ public class OldBaseController
                     <tbody>
                         <tr>
                         <style class='font-family: Calibri;'>
-                            <td style='width:200px'>{row[7]}</th>
-                            <td style='width:200px'>{row[8]}</td>
-                            <td style='width:200px'>{row[9]}</td>
+                            <td style='width:150px'>{row[7]}</th>
+                            <td style='width:150px'>{row[8]}</td>
+                            <td style='width:170px'>{row[9]}</td>
                         </style>
                         </tr>
                 </table>
                 </div><br>";
+            }
         }
         return html;
     }
@@ -72,7 +93,7 @@ public class OldBaseController
             }
             if (row.Count > 0 && row[1] != "год" && row[1] != "" && row[1].Split(".")[0] == year.ToString())
             {
-                html += $@"<div style='width:600px'>
+                html += $@"<div style='width:470px'>
                 <li>
                 <i>{row[1]}.{row[3]}</i>
                 {row[4]}<br>{row[5]}<br>
@@ -86,9 +107,9 @@ public class OldBaseController
                     </thead>
                     <tbody>
                         <tr>
-                            <td style='width:200px'>{row[7]}</th>
-                            <td style='width:200px'>{row[8]}</td>
-                            <td style='width:200px'>{row[9]}</td>
+                            <td style='width:150px'>{row[7]}</th>
+                            <td style='width:150px'>{row[8]}</td>
+                            <td style='width:170px'>{row[9]}</td>
                         </tr>
                 </table>
                 </li></div><br>";

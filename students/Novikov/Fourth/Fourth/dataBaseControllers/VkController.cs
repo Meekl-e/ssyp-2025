@@ -7,21 +7,26 @@ public class VkController
     readonly XElement xDB;
     const string rdf = "{http://www.w3.org/1999/02/22-rdf-syntax-ns#}";
 
-    public string CreateField(int rawNum)
+    public List<int> GetIds()
     {
-        int postsCount = xDB.Elements().Where(x => x.Name.LocalName == "post").Count();
-        int num = rawNum % postsCount;
-        int absPostsCount = 0;
+       
+        List<int> ids = xDB.Elements().Where(post =>
+        post.Name.LocalName == "post")
+        .Select(post => Int32.Parse(post.Attribute($"{rdf}about")?.Value)).ToList();
+        return ids;
+    }
+
+    public string CreateField(int id)
+    {
         XElement xHtml = new("div",
-        xDB.Elements().Where(post =>
+        xDB.Elements().Where(post => post.Name.LocalName == "post")
+        .Where(post =>
         {
-            if (absPostsCount != num)
+            if (post.Attribute($"{rdf}about")?.Value == id.ToString())
             {
-                absPostsCount += 1;
-                return false;
+                return true;
             }
-            absPostsCount += 1;
-            return true;
+            return false;
         }).Select(post =>
         {
             return new XElement(new XElement("div",

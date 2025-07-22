@@ -12,32 +12,42 @@ class MainPageView : DefaultView
         bool redirect = false;
         if (!int.TryParse(request.Query["vkN"], out int vkN))
         {
-            vkN = rand.Next();
+            VkController vkController = new();
+            List<int> ids = vkController.GetIds();
+            vkN = ids[rand.Next(0, ids.Count- 1)];
             redirect = true;
         }
         if (!int.TryParse(request.Query["tgN"], out int tgN))
         {
-            tgN = rand.Next();
+            List<int> ids = TgController.GetIds();
+            tgN = ids[rand.Next(0, ids.Count - 1)];
             redirect = true;
         }
         if (!int.TryParse(request.Query["oBN"], out int oBN))
         {
-            oBN = rand.Next();
+            List<int> ids = OldBaseController.GetIds();
+            oBN = ids[rand.Next(0, ids.Count - 1)];
             redirect = true;
         }
         if (!int.TryParse(request.Query["cNewsN"], out int cNewsN))
         {
-            cNewsN = rand.Next();
+            RssController cNController = new("https://www.cnews.ru/inc/rss/news.xml");
+            int count = cNController.GetCount();
+            cNewsN = rand.Next(0, count - 1);
             redirect = true;
         }
         if (!int.TryParse(request.Query["academCN"], out int academCN))
         {
-            academCN = rand.Next();
+            RssController aCController = new("https://academcity.org/rss.xml");
+            int count = aCController.GetCount();
+            academCN = rand.Next(0, count - 1);
             redirect = true;
         }
         if (!int.TryParse(request.Query["elementyN"], out int elementyN))
         {
-            elementyN = rand.Next();
+            RssController elController = new("https://elementy.ru/rss/news/it");
+            int count = elController.GetCount();
+            elementyN = rand.Next(0, count - 1);
             redirect = true;
         }
         if (!int.TryParse(request.Query["ershArch"], out int ershArch))

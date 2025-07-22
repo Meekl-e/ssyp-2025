@@ -4,6 +4,20 @@ using System.Xml.Linq;
 public class TgController
 {
 
+    public static List<int> GetIds()
+    {
+        APIResults? googleResults = Read().Result;
+        List<int> ids = new();
+        foreach (List<string> row in googleResults.values)
+        {
+            if (row.Count == 6 && row[0] != "ID")
+            {
+                ids.Add(Int32.Parse(row[0]));
+            }
+        }
+        return ids;
+    }
+
     public static string GenerateImage(string file_id)
     {
         if (file_id == "None") return "";
@@ -23,18 +37,18 @@ public class TgController
         return result;
     }
 
-    public static string CreateField(int rawNum)
+    public static string CreateField(int id)
     {
         APIResults? googleResults = Read().Result;
         if (googleResults is null) return "";
-        int rowsCount = googleResults.values.Count;
-        int num = rawNum % (rowsCount - 1);
-        List<string> row = googleResults.values[num + 1];
         string html = "";
-        if (row.Count == 6)
+        foreach (List<string> row in googleResults.values)
         {
-            DateTime time = new DateTime(1970, 1, 1).AddSeconds(int.Parse(row[1]));
-            html = $"{row[5]} <i>{time.Date}</i><br>{GenerateImage(row[3])}";
+            if (row.Count == 6 && row[0] == id.ToString())
+            {
+                DateTime time = new DateTime(1970, 1, 1).AddSeconds(int.Parse(row[1]));
+                html = $"{row[5]} <i>{time.Date}</i><br>{GenerateImage(row[3])}";
+            }
         }
         return html.ToString();
     }
