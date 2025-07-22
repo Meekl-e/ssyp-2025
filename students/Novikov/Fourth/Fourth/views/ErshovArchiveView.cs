@@ -18,8 +18,8 @@ class ErshovArchiveView : DefaultView
     }
 
     public IResult Search(HttpRequest request){
-        if (request.Form.ContainsKey("search")){
-            string query_search = request.Form["search"];
+        if (request.Query.ContainsKey("search")){
+            string query_search = request.Query["search"];
             if (query_search != null && query_search != "")
             {
                 return Results.Content(ershov_controller.Search(query_search.Split(" ")), "text/json");

@@ -7,9 +7,9 @@ public class RssView : DefaultView
     {
         this.source = source;
     }
-    RssController cNController = new("https://www.cnews.ru/inc/rss/news.xml");
-    RssController aCController = new("https://academcity.org/rss.xml");
-    RssController elController = new("https://elementy.ru/rss/news/it");
+    public RssController cNController = new("https://www.cnews.ru/inc/rss/news.xml");
+    public RssController aCController = new("https://academcity.org/rss.xml");
+    public RssController elController = new("https://elementy.ru/rss/news/it");
 
     public IResult GetFieldResult(HttpRequest request)
     {

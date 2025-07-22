@@ -6,15 +6,22 @@ class MainPageView : DefaultView
 
     private readonly Random rand = new();
     MainPageContoller mainPageContoller = new();
+    VkView vk;
+    TgView tg;
+    OldBaseView old;
+    RssView cNView;
+    RssView aCView;
+    RssView elView;
+    
 
     public IResult GetResult(HttpRequest request)
     {
         bool redirect = false;
         if (!int.TryParse(request.Query["vkN"], out int vkN))
         {
-            VkController vkController = new();
-            List<int> ids = vkController.GetIds();
-            vkN = ids[rand.Next(0, ids.Count- 1)];
+
+            List<int> ids = vk.vkController.GetIds();
+            vkN = ids[rand.Next(0, ids.Count - 1)];
             redirect = true;
         }
         if (!int.TryParse(request.Query["tgN"], out int tgN))
@@ -31,22 +38,20 @@ class MainPageView : DefaultView
         }
         if (!int.TryParse(request.Query["cNewsN"], out int cNewsN))
         {
-            RssController cNController = new("https://www.cnews.ru/inc/rss/news.xml");
-            int count = cNController.GetCount();
+            int count = cNView.cNController.GetCount();
             cNewsN = rand.Next(0, count - 1);
             redirect = true;
         }
         if (!int.TryParse(request.Query["academCN"], out int academCN))
         {
-            RssController aCController = new("https://academcity.org/rss.xml");
-            int count = aCController.GetCount();
+            int count = aCView.aCController.GetCount();
             academCN = rand.Next(0, count - 1);
             redirect = true;
         }
         if (!int.TryParse(request.Query["elementyN"], out int elementyN))
         {
-            RssController elController = new("https://elementy.ru/rss/news/it");
-            int count = elController.GetCount();
+
+            int count = elView.elController.GetCount();
             elementyN = rand.Next(0, count - 1);
             redirect = true;
         }
@@ -60,6 +65,16 @@ class MainPageView : DefaultView
             return Results.Redirect($"/?vkN={vkN}&tgN={tgN}&oBN={oBN}&cNewsN={cNewsN}&academCN={academCN}&elementyN={elementyN}&ershArch={ershArch}");
         }
         return Results.Content(mainPageContoller.CreateHtml(vkN, tgN, oBN, cNewsN, academCN, elementyN, ershArch), "text/html");
+    }
+
+    public MainPageView(ref VkView vk, ref TgView tg, ref OldBaseView old, ref RssView cNView, ref RssView aCView, ref RssView elView)
+    {
+        this.vk = vk;
+        this.tg = tg;
+        this.old = old;
+        this.cNView = cNView;
+        this.aCView = aCView;
+        this.elView = elView;
     }
     
     public IResult GetFieldResult(HttpRequest request)

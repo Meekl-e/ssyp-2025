@@ -1,10 +1,11 @@
 
 
+using System.Text.Json;
 using Nestor;
 
 public class VkView : DefaultView
 {
-    VkController vkController = new();
+    public VkController vkController = new();
     
 
 
@@ -24,6 +25,16 @@ public class VkView : DefaultView
         }
 
         return Results.Content(vkController.CreateHtml(start, step), "text/html");
+    }
+    public IResult Search(HttpRequest request){
+        if (request.Query.ContainsKey("search")){
+            string query_search = request.Query["search"];
+            if (query_search != null && query_search != "")
+            {
+                return Results.Content(vkController.Search(query_search.Split(" ")), "text/json");
+            }
+        }
+        return Results.Content(JsonSerializer.Serialize(""), "text/json");
     }
 
     public IResult GetFieldResult(HttpRequest request)

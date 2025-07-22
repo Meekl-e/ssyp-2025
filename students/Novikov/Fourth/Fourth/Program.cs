@@ -6,9 +6,6 @@ var app = builder.Build();
 app.UseStaticFiles();
 
 
-MainPageView mainPageView = new();
-app.MapGet("/", (HttpRequest request) => mainPageView.GetResult(request));
-
 VkView vkView = new();
 app.MapGet("/vk/", (HttpRequest request) => vkView.GetResult(request));
 app.MapGet("/vk_field/", (HttpRequest request) => vkView.GetFieldResult(request));
@@ -45,5 +42,9 @@ app.MapGet("/syp_search", (HttpRequest request) => view.GetResult(request));
 app.MapGet("/person", (HttpRequest request) => view.GetPersonResult(request));
 
 app.MapGet("/studio", (HttpRequest request) => view.GetStudioResult(request));
+
+
+MainPageView mainPageView = new(ref vkView, ref tgView,ref oldBaseView, ref cNView, ref aCView, ref elView );
+app.MapGet("/", (HttpRequest request) => mainPageView.GetResult(request));
 
 app.Run();

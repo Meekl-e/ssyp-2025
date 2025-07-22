@@ -125,9 +125,11 @@ public class VkController : DefaultController
 
     public VkController()
     {
+
         xDB = XElement.Load("datasets/data.fog");
         this.docs_to_search = xDB.Elements().Where(x => x.Name.LocalName == "post").Select(x => ConvertBase64(x.Element("text")?.Value)).ToList();
         DataSourceList dsl = new DataSourceList([.. docs_to_search]);
         this.searcher = new WordsSearcher<string, int>(dsl);
+        Console.WriteLine("VK Loaded");
     }
 }
