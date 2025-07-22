@@ -1,8 +1,11 @@
 
 
+using Nestor;
+
 public class VkView : DefaultView
 {
     VkController vkController = new();
+    
 
 
     public IResult GetResult(HttpRequest request)

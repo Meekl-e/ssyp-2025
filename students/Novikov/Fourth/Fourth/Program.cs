@@ -5,7 +5,6 @@ var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 app.UseStaticFiles();
 
-NestorMorph morph = null;
 
 MainPageView mainPageView = new();
 app.MapGet("/", (HttpRequest request) => mainPageView.GetResult(request));
@@ -34,7 +33,7 @@ RssView elView = new("elementy");
 app.MapGet("/elementy/", (HttpRequest request) => elView.GetResult(request));
 app.MapGet("/elementy_field/", (HttpRequest request) => elView.GetFieldResult(request));
 
-ErshovArchiveView ershovArchive = new(morph);
+ErshovArchiveView ershovArchive = new();
 app.MapGet("/ershov_archive/", (HttpRequest request) => ershovArchive.GetResult(request));
 app.MapGet("/ershov_archive_field/", (HttpRequest request) => ershovArchive.GetFieldResult(request));
 

@@ -19,24 +19,24 @@ public interface IDataSource<D, K>
     IEnumerable<Tuple<D, K>> ElementsDK(); // Документ и его ключ
     D GetElement(K key);
     IEnumerable<K> WordToKeys(string word);
-    Func<Tuple<D, NestorMorph>, IEnumerable<string>> GetDWFunc();
+    Func<D, IEnumerable<string>> GetDWFunc();
 }
 public class WordsSearcher<D, K>
 {
     private IDataSource<D, K> dsource;
-    private Func<Tuple<D, NestorMorph>, IEnumerable<string>> dwFunc;
+    private Func<D, IEnumerable<string>> dwFunc;
     private Dictionary<string, K[]> wordToKeys;
 
     private NestorMorph morph;
 
-    public WordsSearcher(IDataSource<D, K> dsource, NestorMorph morph)
+    public WordsSearcher(IDataSource<D, K> dsource)
     {
         this.dsource = dsource;
         this.dwFunc = dsource.GetDWFunc();
         this.morph = morph;
 
         wordToKeys = dsource.ElementsDK()
-            .SelectMany(dk => dwFunc(new Tuple<D, NestorMorph>(dk.Item1, morph))
+            .SelectMany(dk => dwFunc(dk.Item1)
                 .Select(w => { var k = dk.Item2; return (w, k); }))
             .GroupBy(wk => wk.w, wk => wk.k)
             .ToDictionary(igr => igr.Key, igr => igr.ToArray());
@@ -98,9 +98,9 @@ class DataSourceList : IDataSource<string, int>
         return list.Select((d, i) => new Tuple<string, int>(d, i));
     }
 
-    public Func<Tuple<string, NestorMorph>, IEnumerable<string>> GetDWFunc() // преобразователь документа в поток строк
+    public Func<string, IEnumerable<string>> GetDWFunc() // преобразователь документа в поток строк
     {
-        return (Tuple<string, NestorMorph> tuple) => tuple.Item1.Split(" ").Distinct();//.Select(w => tuple.Item2.Lemmatize(w).FirstOrDefault()).Where(x=>x!=null);
+        return (string obj) => obj.Split(" ").Distinct().Select(w => Morph.nestorMorph.Lemmatize(w).FirstOrDefault()).Where(x=>x!=null);
     }
 
     public string GetElement(int key)

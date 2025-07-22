@@ -9,7 +9,7 @@ using Nestor;
 using System.Text.Json;
 
 
-public class ErshovArchiveController
+public class ErshovArchiveController : DefaultController
 {
     private List<DocObject> database;
 
@@ -17,7 +17,7 @@ public class ErshovArchiveController
 
     public WordsSearcher<string, int> searcher;
 
-    public ErshovArchiveController(string path_to_folder, NestorMorph nestorMorph)
+    public ErshovArchiveController(string path_to_folder)
     {
 
         string file_content = File.ReadAllText(path_to_folder + @"\docs.csv");
@@ -44,13 +44,11 @@ public class ErshovArchiveController
         // this.dict_docs = this.database.ToDictionary(x => x.id);
 
         DataSourceList dsl = new DataSourceList([.. database.Select(o => o.description)]);
-        this.searcher = new WordsSearcher<string, int>(dsl, nestorMorph);
+        this.searcher = new WordsSearcher<string, int>(dsl);
 
         Console.WriteLine("Loaded");
 
     }
-
-
 
 
     public IEnumerable<DocObject> GetDocs(int amount = 10)
@@ -69,22 +67,20 @@ public class ErshovArchiveController
         return html.Replace("{{ snippet }}", ul_string).Replace("{{ title }}", "Архив Ершова");
     }
 
-    public string Search(string query_search)
+    public string Search(string[] query_search)
     {
-        IEnumerable<DocObject> search_result = searcher.SearchForKey(query_search.Split(" ")).Select(x => this.database[x.Item1]);
+        IEnumerable<DocObject> search_result = searcher.SearchForKey(query_search).Select(x => this.database[x.Item1]);
         Console.WriteLine(search_result.Count());
 
         return JsonSerializer.Serialize(search_result);
     }
 
-       public string GetOnePost(int num)
+       public string CreateField(int num)
     {
         var o = this.database.Skip(num - 1).First();
         
         return $"<li>{o.description}</li>";
     }
 
-        
-    
 }
 

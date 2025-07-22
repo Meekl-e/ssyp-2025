@@ -11,18 +11,18 @@ class ErshovArchiveView : DefaultView
 {
     ErshovArchiveController ershov_controller;
 
-    public ErshovArchiveView(NestorMorph morph)
+    public ErshovArchiveView()
     {
-        this.ershov_controller = new ErshovArchiveController("datasets/ErshArchData", morph);
+        this.ershov_controller = new ErshovArchiveController("datasets/ErshArchData");
 
     }
 
     public IResult Search(HttpRequest request){
         if (request.Form.ContainsKey("search")){
             string query_search = request.Form["search"];
-            if (query_search != null || query_search != "")
+            if (query_search != null && query_search != "")
             {
-                return Results.Content(ershov_controller.Search(query_search), "text/json");
+                return Results.Content(ershov_controller.Search(query_search.Split(" ")), "text/json");
             }
         }
         return Results.Content(JsonSerializer.Serialize(""), "text/json");
@@ -54,7 +54,7 @@ class ErshovArchiveView : DefaultView
             return Results.Redirect($"/ershov_archive_field?num={num}");
         }
 
-        return Results.Content(ershov_controller.GetOnePost(num), "text/html");
+        return Results.Content(ershov_controller.CreateField(num), "text/html");
     }
 }
 

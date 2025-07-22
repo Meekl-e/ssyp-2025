@@ -39,3 +39,10 @@ public interface DefaultView
     IResult GetResult(HttpRequest request);
     IResult GetFieldResult(HttpRequest request);
 }
+
+public interface DefaultController
+{
+    string CreateHtml(int start, int step);
+    string Search(string[] query_search);
+    string CreateField(int num);
+}

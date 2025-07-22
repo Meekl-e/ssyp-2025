@@ -1,15 +1,19 @@
 using System.Xml.Linq;
 using System.Text;
+using Nestor;
+using System.Text.Json;
 
-public class VkController
+public class VkController : DefaultController
 {
     
     readonly XElement xDB;
     const string rdf = "{http://www.w3.org/1999/02/22-rdf-syntax-ns#}";
+    List<string> docs_to_search;
+    public WordsSearcher<string, int> searcher;
 
     public List<int> GetIds()
     {
-       
+
         List<int> ids = xDB.Elements().Where(post =>
         post.Name.LocalName == "post")
         .Select(post => Int32.Parse(post.Attribute($"{rdf}about")?.Value)).ToList();
@@ -109,8 +113,21 @@ public class VkController
         return Encoding.UTF8.GetString(Convert.FromBase64String(text));
     }
 
+    public string Search(string[] query_search)
+    {
+        var search_result = searcher.SearchForKey(query_search).Select(x => this.docs_to_search[x.Item1]);
+        Console.WriteLine(search_result.Count());
+
+        return JsonSerializer.Serialize(search_result);
+    }
+
+
+
     public VkController()
     {
         xDB = XElement.Load("datasets/data.fog");
+        this.docs_to_search = xDB.Elements().Where(x => x.Name.LocalName == "post").Select(x => ConvertBase64(x.Element("text")?.Value)).ToList();
+        DataSourceList dsl = new DataSourceList([.. docs_to_search]);
+        this.searcher = new WordsSearcher<string, int>(dsl);
     }
 }
