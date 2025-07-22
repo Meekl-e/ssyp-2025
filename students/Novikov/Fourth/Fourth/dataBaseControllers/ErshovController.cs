@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Xml.Linq;
 using Nestor;
+using System.Text.Json;
 
 
 public class ErshovArchiveController
 {
-    private IEnumerable<DocObject> database;
-    public Dictionary<string, DocObject> dict_docs;
+    private List<DocObject> database;
 
-    private string[] docs_to_search;
     private Dictionary<int, string> scans = new Dictionary<int, string>();
 
     public WordsSearcher<string, int> searcher;
@@ -26,16 +25,28 @@ public class ErshovArchiveController
 
 
         this.scans = file_scans_content.Split("\n").Skip(1).Select(row => new KeyValuePair<int, string>(int.Parse(row.Split("\t")[0]), row.Split("\t")[3])).ToDictionary(x => x.Key, v => v.Value);
+        file_scans_content = "";
 
 
-        this.database = file_content.Split("\n").Select(x => x.Split("\t")).Skip(1).Select(x => new DocObject(x, this.scans));
+        this.database = file_content.Split("\n").Skip(1).Select(x => x.Split("\t")).Select(x => new DocObject(x)).Select(o =>
+        {
+            if (!o.row_array[6].Contains("N"))
+            {
 
-        this.docs_to_search = [.. database.Select(o => o.description)];
+                o.url_docs = o.row_array[6].Split(",").Select(x => int.Parse(x)).Distinct().Where(id => scans.ContainsKey(id)).Select(id => scans[id]);
+                o.SerializeUrls();
+            }
+            return o;
+        }).ToList();
+        
+        this.scans = null;
+        file_content = "";
 
-        this.dict_docs = this.database.DistinctBy(x => x.description).ToDictionary(x => x.description);
+        // this.dict_docs = this.database.ToDictionary(x => x.id);
 
-        DataSourceList dsl = new DataSourceList(docs_to_search);
+        DataSourceList dsl = new DataSourceList([.. database.Select(o => o.description)]);
         this.searcher = new WordsSearcher<string, int>(dsl, nestorMorph);
+        dsl = null;
 
         Console.WriteLine("Loaded");
 
@@ -62,16 +73,10 @@ public class ErshovArchiveController
 
     public string Search(string query_search)
     {
-        (string, int)[] search_result = searcher.Search(query_search.Split(" "));
+        IEnumerable<DocObject> search_result = searcher.SearchForKey(query_search.Split(" ")).Select(x => this.database[x.Item1]);
+        Console.WriteLine(search_result.Count());
 
-
-        string html = File.ReadAllText("wwwroot/htmls/index.html");
-        string ul_string = "<ul>";
-
-        ul_string += search_result.Select(x => dict_docs[x.Item1]).Select(x => $"<li><img src='{x.url_docs.FirstOrDefault()}'/> {x.description}</li>").Aggregate((a, o) => a + o);
-
-        ul_string += "</ul>";
-        return html.Replace("{{ list_docs }}", ul_string);
+        return JsonSerializer.Serialize(search_result);
     }
 
        public string GetOnePost(int num)

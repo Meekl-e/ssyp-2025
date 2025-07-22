@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using Nestor;
@@ -50,15 +51,22 @@ public class WordsSearcher<D, K>
             .OrderByDescending(k => k.Item2)
             .ToArray()
             ;
+
         return query.Select(x => (dsource.GetElement(x.Key), x.Item2)).ToArray();
-        //foreach (var pair in query)
-        // {
-        //    Console.WriteLine($"group: {dsource.GetElement(pair.Key)} {pair.Item2}");
-            //foreach (int i in group)
-            //{
-            //    Console.WriteLine(i);
-            //}
-        //  }
+    }
+    
+    public (K, int)[] SearchForKey(string[] words)
+    {
+
+        // .Select(w => morph.Lemmatize(w)[0])
+        var query = words.SelectMany(w => { if (wordToKeys.TryGetValue(w, out K[] karr)) return karr; else return new K[0]; })
+            .GroupBy(k => k)
+            .Select(igr => (igr.Key, igr.Count()))
+            .OrderByDescending(k => k.Item2)
+            .ToArray()
+            ;
+        
+        return query;
     }
 }
 

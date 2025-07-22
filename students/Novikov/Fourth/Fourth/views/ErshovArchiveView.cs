@@ -23,7 +23,7 @@ class ErshovArchiveView : DefaultView
             string query_search = request.Query["search"];
             if (query_search != null || query_search != "")
             {
-                return Results.Content(ershov_controller.Search(query_search), "text/html");
+                return Results.Content(ershov_controller.Search(query_search), "text/json");
             }
             return Results.Content("Ошибка поиска", "text/plain");;
         }

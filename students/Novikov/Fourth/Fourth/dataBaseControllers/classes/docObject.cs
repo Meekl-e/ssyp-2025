@@ -1,29 +1,31 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using Microsoft.AspNetCore.SignalR;
 
 
 public class DocObject
 {
-    public string type = "";
-    public IEnumerable<int> ids_doc = new List<int>();
+    public string type { get; set; }
     public IEnumerable<string> url_docs = new List<string>();
-    public int id;
+    public int id { get; set; }
 
-    public string description = "";
+    public string[] row_array;
 
-    public DocObject(IEnumerable<string> row, Dictionary<int, string> scans)
+    public string description { get; set; }
+    public string serialized_urls { get; set; }
+
+    public DocObject(IEnumerable<string> row)
     {
-        string[] row_array = row.ToArray();
+        row_array = row.ToArray();
         this.type = row_array[1];
         this.description = row_array[3];
         this.id = int.Parse(row_array[0]);
-        if (!row_array[6].Contains("N"))
-        {
-
-            this.ids_doc = row_array[6].Split(",").Select(x => int.Parse(x)).Distinct().Where(id => scans.ContainsKey(id));
-            this.url_docs = ids_doc.Select(id => scans[id]);
-        }
+    }
+    public void SerializeUrls()
+    {
+        this.serialized_urls = JsonSerializer.Serialize(url_docs);
     }
 
     public bool Print()
