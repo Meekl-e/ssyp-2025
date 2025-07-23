@@ -33,7 +33,7 @@ public class ErshovArchiveController : DefaultController
             if (!o.row_array[6].Contains("N"))
             {
 
-                o.url_docs = o.row_array[6].Split(",").Select(x => int.Parse(x)).Distinct().Where(id => scans.ContainsKey(id)).Select(id => scans[id]);
+                o.url_docs = o.row_array[6].Split(",").Select(x => int.Parse(x)).Distinct().Where(id => scans.ContainsKey(id)).SelectMany(id => scans[id].Split(","));
                 o.SerializeUrls();
             }
             return o;
@@ -41,7 +41,7 @@ public class ErshovArchiveController : DefaultController
 
         file_content = "";
 
-        // this.dict_docs = this.database.ToDictionary(x => x.id);
+
 
         DataSourceList dsl = new DataSourceList([.. database.Select(o => o.description)]);
         this.searcher = new WordsSearcher<string, int>(dsl);
