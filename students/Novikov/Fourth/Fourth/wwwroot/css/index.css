@@ -27,6 +27,7 @@ head {
 }
 
 
+
 .my-box {
     width: 500px;
     min-height: 500px;
@@ -40,7 +41,7 @@ head {
 }
 
 .rubrika {
-    border-radius: 80px;
+    border-radius: 8px;
     background-color: #ffebb6;
     font-size: large;
     color: Black;
@@ -85,6 +86,17 @@ head {
     filter: blur(0); /* Убираем размытие при загрузке */
 }
 
-
-
+.ForController {
+    font-family: Calibri;
+    background-color: #ffffd8;
+    margin: auto;
+    font-size: xxx-large;
 }
+
+.text_search {
+    font-size: large;
+    margin-top: 100px;
+}
+
+
+

@@ -7,7 +7,7 @@ public class Controller
     public static string CreateHtml(string search)
     {
         XElement xDB = XElement.Load($"http://syp.iis.nsk.su/SypWebApi/xml/search/{search}");
-        XElement html = new XElement("div",
+        XElement html = new XElement("div", new XAttribute("class", "ForController"),
         xDB.Elements().Where(item => item.Attribute("type").Value == "http://fogid.net/o/person")
         .Select(person =>
         {
@@ -17,13 +17,13 @@ public class Controller
             new XElement("br"));
         }));
 
-        return HtmlPage.GetField("", html.ToString());
+        return HtmlPage.GetHtml("", html.ToString());
     }
 
     public static string CreatePersonHtml(string id)
     {
         XElement xDB = XElement.Load($"http://syp.iis.nsk.su/SypWebApi/xml/tree/{id}");
-        XElement html = new XElement("div",
+        XElement html = new XElement("div", new XAttribute("class", "ForController"),
         xDB.Elements().Single(x => x.Name.LocalName == "text")
             .Elements().Single(x => x.Name.LocalName == "v").Value,
         xDB.Elements().Select(x =>
@@ -65,13 +65,13 @@ public class Controller
             }));
         }));
 
-        return HtmlPage.GetField("", html.ToString());
+        return HtmlPage.GetHtml("", html.ToString());
     }
 
     public static string CreateStudioHtml(string id)
     {
         XElement xDB = XElement.Load($"http://syp.iis.nsk.su/SypWebApi/xml/tree/{id}");
-        XElement html = new XElement("div",
+        XElement html = new XElement("div", new XAttribute("class", "ForController"),
         xDB.Elements().Single(x => x.Attribute("prop").Value == "name")
             .Elements().Single(x => x.Name.LocalName == "v").Value,
         xDB.Elements().Single(x => x.Attribute("prop").Value == "in-org")
@@ -116,6 +116,6 @@ public class Controller
             }));
         }));
 
-        return HtmlPage.GetField("", html.ToString());
+        return HtmlPage.GetHtml("", html.ToString());
     }
 }
