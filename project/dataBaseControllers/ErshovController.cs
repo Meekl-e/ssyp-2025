@@ -38,7 +38,7 @@ public class ErshovArchiveController : DefaultController
             }
             return o;
         }).ToList();
-        
+
         file_content = "";
 
         // this.dict_docs = this.database.ToDictionary(x => x.id);
@@ -48,6 +48,12 @@ public class ErshovArchiveController : DefaultController
 
         Console.WriteLine("Ershov loaded");
 
+    }
+    public List<int> GetIds()
+    {
+
+        List<int> ids = this.database.Select(x => x.id).ToList();
+        return ids;
     }
 
 
@@ -74,14 +80,24 @@ public class ErshovArchiveController : DefaultController
         return JsonSerializer.Serialize(search_result);
     }
 
-       public string CreateField(int num)
+    public string CreateField(int num)
     {
         var o = this.database.SingleOrDefault(x => x.id == num);
         if (o == null)
         {
             return "";
         }
-        return HtmlPage.GetHtml("Архив Ершова", o.description);
+        return HtmlPage.GetField("Архив Ершова", o.description + "<br>" + o.url_docs.Select(u => $"<img src={u} width=\"200px\"></img>").Aggregate((acc, w) => acc + w));
+    }
+    
+       public string CreateSearchView(int num)
+    {
+        var o = this.database.SingleOrDefault(x => x.id == num);
+        if (o == null)
+        {
+            return "";
+        }
+        return HtmlPage.GetHtml("Архив Ершова", o.description +"<br>"+ o.url_docs.Select(u => $"<img src={u} width=\"200px\"></img>").Aggregate((acc, w)=>acc+w));
     }
 
 }

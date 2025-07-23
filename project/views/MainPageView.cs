@@ -12,6 +12,8 @@ class MainPageView : DefaultView
     RssView cNView;
     RssView aCView;
     RssView elView;
+    
+    ErshovArchiveView ershovView;
 
     public IResult GetResult(HttpRequest request)
     {
@@ -56,7 +58,9 @@ class MainPageView : DefaultView
         }
         if (!int.TryParse(request.Query["ershArch"], out int ershArch))
         {
-            ershArch = rand.Next(1, 100); // add abs random
+
+            List<int> ids = ershovView.ershov_controller.GetIds();
+            ershArch = ids[rand.Next(0, ids.Count - 1)];
             redirect = true;
         }
         if (redirect)
@@ -66,7 +70,7 @@ class MainPageView : DefaultView
         return Results.Content(mainPageContoller.CreateHtml(vkN, tgN, oBN, cNewsN, academCN, elementyN, ershArch), "text/html");
     }
 
-    public MainPageView(ref VkView vk, ref TgView tg, ref OldBaseView old, ref RssView cNView, ref RssView aCView, ref RssView elView)
+    public MainPageView(ref VkView vk, ref TgView tg, ref OldBaseView old, ref RssView cNView, ref RssView aCView, ref RssView elView, ref ErshovArchiveView ershovArchiveView)
     {
         this.vk = vk;
         this.tg = tg;
@@ -74,6 +78,7 @@ class MainPageView : DefaultView
         this.cNView = cNView;
         this.aCView = aCView;
         this.elView = elView;
+        this.ershovView = ershovArchiveView;
     }
     
     public IResult GetFieldResult(HttpRequest request)

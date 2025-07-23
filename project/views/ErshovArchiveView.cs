@@ -9,7 +9,7 @@ using System.Text.Json;
 
 class ErshovArchiveView : DefaultView
 {
-    ErshovArchiveController ershov_controller;
+    public ErshovArchiveController ershov_controller;
 
     public ErshovArchiveView()
     {
@@ -17,8 +17,10 @@ class ErshovArchiveView : DefaultView
 
     }
 
-    public string Search(HttpRequest request){
-        if (request.Query.ContainsKey("search")){
+    public string Search(HttpRequest request)
+    {
+        if (request.Query.ContainsKey("search"))
+        {
             string query_search = request.Query["search"];
             if (query_search != null && query_search != "")
             {
@@ -46,6 +48,7 @@ class ErshovArchiveView : DefaultView
         return Results.Content(ershov_controller.CreateHtml(start, step), "text/html");
     }
 
+
     public IResult GetFieldResult(HttpRequest request)
     {
         if (!int.TryParse(request.Query["num"], out int num))
@@ -55,6 +58,16 @@ class ErshovArchiveView : DefaultView
         }
 
         return Results.Content(ershov_controller.CreateField(num), "text/html");
+    }
+    
+    public IResult GetSearchResult(HttpRequest request)
+    {
+        if (!int.TryParse(request.Query["num"], out int num))
+        {
+            num = 0;
+            return Results.Redirect($"/ershov_archive_field?num={num}");
+        }
+        return Results.Content(ershov_controller.CreateSearchView(num), "text/html");
     }
 }
 

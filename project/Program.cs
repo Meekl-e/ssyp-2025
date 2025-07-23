@@ -44,7 +44,7 @@ app.MapGet("/person", (HttpRequest request) => view.GetPersonResult(request));
 app.MapGet("/studio", (HttpRequest request) => view.GetStudioResult(request));
 
 
-MainPageView mainPageView = new(ref vkView, ref tgView,ref oldBaseView, ref cNView, ref aCView, ref elView );
+MainPageView mainPageView = new(ref vkView, ref tgView,ref oldBaseView, ref cNView, ref aCView, ref elView, ref ershovArchiveView );
 app.MapGet("/", (HttpRequest request) => mainPageView.GetResult(request));
 
 SearchView searchView = new(ref vkView, ref tgView, ref oldBaseView, ref cNView, ref aCView, ref elView, ref ershovArchiveView );
