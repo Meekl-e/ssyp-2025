@@ -90,8 +90,11 @@ head {
 .ForController {
     font-family: Calibri;
     background-color: #ffffd8;
-    margin: auto;
     font-size: xxx-large;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 .text_search {
@@ -106,8 +109,16 @@ head {
     }
 
     .tgvk {
-        margin-top: auto;
+        color: orange;
+        margin-top: 20px;
     }
+}
+
+.search_field {
+    width: 500px;
+    min-height: 500px;
+    border-radius: 20px;
+    background-color: #eeeec7;
 }
 
 
