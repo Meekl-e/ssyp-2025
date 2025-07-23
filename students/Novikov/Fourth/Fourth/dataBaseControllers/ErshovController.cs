@@ -76,9 +76,12 @@ public class ErshovArchiveController : DefaultController
 
        public string CreateField(int num)
     {
-        var o = this.database.Skip(num - 1).First();
-        
-        return $"<li>{o.description}</li>";
+        var o = this.database.SingleOrDefault(x => x.id == num);
+        if (o == null)
+        {
+            return "";
+        }
+        return o.description;
     }
 
 }

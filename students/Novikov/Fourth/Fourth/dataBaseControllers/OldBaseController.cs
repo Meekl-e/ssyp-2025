@@ -1,12 +1,18 @@
 using System.Text.Json;
 
-public class OldBaseController
+public class OldBaseController : DefaultController
 {
     APIResults? oBDResults;
+    List<DefaultObject> docs_to_search;
+    public WordsSearcher<string, int> searcher;
 
     public OldBaseController()
     {
         oBDResults = Read().Result;
+        this.docs_to_search = oBDResults.values.Where(row => row[1] != "год").Select(row =>new DefaultObject(){ description=row[5], id=int.Parse(row[0])}).ToList();
+        DataSourceList dsl = new DataSourceList([.. docs_to_search.Select(x => x.description)]);
+        this.searcher = new WordsSearcher<string, int>(dsl);
+        Console.WriteLine("OldDataBase Loaded");
     }
 
     public List<int> GetIds()
@@ -22,6 +28,8 @@ public class OldBaseController
         }
         return ids;
     }
+
+
     
     public async Task<APIResults?> Read()
     {
@@ -80,7 +88,7 @@ public class OldBaseController
     }
     
 
-    public string CreateHtml(int year)
+    public string CreateHtml(int year, int _=0)
     {
         if (oBDResults is null) return "";
         string html = $@"<a href='/old_base?year={year - 1}'>Назад</a>
@@ -122,5 +130,10 @@ public class OldBaseController
         html += "</ul>";
 
         return HtmlPage.GetHtml("Данные старых мастерских", html);
+    }
+
+    public string Search(string[] query_search)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -8,7 +8,7 @@ public class VkController : DefaultController
     
     readonly XElement xDB;
     const string rdf = "{http://www.w3.org/1999/02/22-rdf-syntax-ns#}";
-    List<string> docs_to_search;
+    List<DefaultObject> docs_to_search;
     public WordsSearcher<string, int> searcher;
 
     public List<int> GetIds()
@@ -125,8 +125,9 @@ public class VkController : DefaultController
     {
 
         xDB = XElement.Load("datasets/data.fog");
-        this.docs_to_search = xDB.Elements().Where(x => x.Name.LocalName == "post").Select(x => ConvertBase64(x.Element("text")?.Value)).ToList();
-        DataSourceList dsl = new DataSourceList([.. docs_to_search]);
+        this.docs_to_search = xDB.Elements().Where(x => x.Name.LocalName == "post")
+        .Select(x => new DefaultObject() { description=ConvertBase64(x.Element("text")?.Value), id=int.Parse(x.Attribute($"{rdf}about").Value) }).ToList();
+        DataSourceList dsl = new DataSourceList([.. docs_to_search.Select(o => o.description)]);
         this.searcher = new WordsSearcher<string, int>(dsl);
         Console.WriteLine("VK Loaded");
     }

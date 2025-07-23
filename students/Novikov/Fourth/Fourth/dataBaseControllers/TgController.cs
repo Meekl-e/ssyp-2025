@@ -4,14 +4,14 @@ using System.Xml.Linq;
 public class TgController : DefaultController
 {
     APIResults? tgResults;
-    List<string> docs_to_search;
+    List<DefaultObject> docs_to_search;
     public WordsSearcher<string, int> searcher;
 
     public TgController()
     {
         tgResults = Read().Result;
-        this.docs_to_search = tgResults.values.Where(row => row.Count == 6).Select(x=>x[5]).ToList();
-        DataSourceList dsl = new DataSourceList([.. docs_to_search]);
+        this.docs_to_search = tgResults.values.Skip(1).Where(row => row.Count == 6).Select(x=>new DefaultObject(){description=x[5], id=int.Parse(x[0])}).ToList();
+        DataSourceList dsl = new DataSourceList([.. docs_to_search.Select(o => o.description)]);
         this.searcher = new WordsSearcher<string, int>(dsl);
         Console.WriteLine("TG Loaded");
     }

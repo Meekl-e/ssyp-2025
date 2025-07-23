@@ -51,7 +51,8 @@ public interface DefaultController
 {
 
     string CreateHtml(int start, int step);
-    
+
     string CreateField(int num);
     public string Search(string[] query_search);
 }
+

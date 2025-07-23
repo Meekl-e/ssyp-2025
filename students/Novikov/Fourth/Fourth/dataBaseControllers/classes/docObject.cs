@@ -5,15 +5,12 @@ using System.Text.Json;
 using Microsoft.AspNetCore.SignalR;
 
 
-public class DocObject
+public class DocObject : DefaultObject
 {
     public string type { get; set; }
     public IEnumerable<string> url_docs = new List<string>();
-    public int id { get; set; }
 
     public string[] row_array;
-
-    public string description { get; set; }
     public string serialized_urls { get; set; }
 
     public DocObject(IEnumerable<string> row)
@@ -38,5 +35,12 @@ public class DocObject
         Console.Write("\n");
         return true;
     }
-    
+
+}
+
+public class DefaultObject
+{
+    public int id { get; set; }
+    public string description { get; set; }
+
 }
