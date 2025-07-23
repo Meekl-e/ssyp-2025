@@ -30,11 +30,11 @@ RssView elView = new("elementy");
 app.MapGet("/elementy/", (HttpRequest request) => elView.GetResult(request));
 app.MapGet("/elementy_field/", (HttpRequest request) => elView.GetFieldResult(request));
 
-ErshovArchiveView ershovArchive = new();
-app.MapGet("/ershov_archive/", (HttpRequest request) => ershovArchive.GetResult(request));
-app.MapGet("/ershov_archive_field/", (HttpRequest request) => ershovArchive.GetFieldResult(request));
+ErshovArchiveView ershovArchiveView = new();
+app.MapGet("/ershov_archive/", (HttpRequest request) => ershovArchiveView.GetResult(request));
+app.MapGet("/ershov_archive_field/", (HttpRequest request) => ershovArchiveView.GetFieldResult(request));
 
-app.MapGet("/search/", (HttpRequest request) => ershovArchive.GetResult(request));
+
 
 View view = new();
 app.MapGet("/syp_search", (HttpRequest request) => view.GetResult(request));
@@ -47,4 +47,6 @@ app.MapGet("/studio", (HttpRequest request) => view.GetStudioResult(request));
 MainPageView mainPageView = new(ref vkView, ref tgView,ref oldBaseView, ref cNView, ref aCView, ref elView );
 app.MapGet("/", (HttpRequest request) => mainPageView.GetResult(request));
 
+SearchView searchView = new(ref vkView, ref tgView, ref oldBaseView, ref cNView, ref aCView, ref elView, ref ershovArchiveView );
+app.MapGet("/search", (HttpRequest request) => searchView.GetResult(request));
 app.Run();

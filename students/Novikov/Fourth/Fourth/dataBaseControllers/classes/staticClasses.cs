@@ -38,6 +38,7 @@ public interface DefaultView
 {
     IResult GetResult(HttpRequest request);
     IResult GetFieldResult(HttpRequest request);
+    IResult Search(HttpRequest request);
 }
 
 public interface DefaultController
