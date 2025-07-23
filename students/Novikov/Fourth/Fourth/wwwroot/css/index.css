@@ -24,6 +24,7 @@ head {
     flex-direction: row;
     flex-wrap: wrap;
 
+
 }
 
 
@@ -97,6 +98,19 @@ head {
     font-size: large;
     margin-top: 100px;
 }
+
+
+@media (max-width: 500px) {
+    .my-container_w {
+        font-size: 14px;
+    }
+
+    .tgvk {
+        margin-top: auto;
+    }
+}
+
+
 
 
 
