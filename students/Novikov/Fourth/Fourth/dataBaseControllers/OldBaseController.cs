@@ -9,7 +9,7 @@ public class OldBaseController : DefaultController
     public OldBaseController()
     {
         oBDResults = Read().Result;
-        this.docs_to_search = oBDResults.values.Where(row => row[1] != "год").Select(row =>new DefaultObject(){ description=row[5], id=int.Parse(row[0])}).ToList();
+        this.docs_to_search = oBDResults.values.Skip(1).Select(row =>new DefaultObject("old_base"){ description=row[5], id=int.Parse(row[0])}).ToList();
         DataSourceList dsl = new DataSourceList([.. docs_to_search.Select(x => x.description)]);
         this.searcher = new WordsSearcher<string, int>(dsl);
         Console.WriteLine("OldDataBase Loaded");
@@ -134,6 +134,8 @@ public class OldBaseController : DefaultController
 
     public string Search(string[] query_search)
     {
-        throw new NotImplementedException();
+        var search_result = searcher.SearchForKey(query_search).Select(x => docs_to_search[x.Item1]);
+
+        return JsonSerializer.Serialize(search_result);
     }
 }

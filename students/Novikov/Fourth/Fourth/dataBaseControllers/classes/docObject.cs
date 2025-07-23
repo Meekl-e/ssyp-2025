@@ -14,7 +14,9 @@ public class DocObject : DefaultObject
     public string serialized_urls { get; set; }
 
     public DocObject(IEnumerable<string> row)
+    : base("ershov_archive")
     {
+
         row_array = row.ToArray();
         this.type = row_array[1];
         this.description = row_array[3];
@@ -42,5 +44,12 @@ public class DefaultObject
 {
     public int id { get; set; }
     public string description { get; set; }
+
+    public string name_db { get; set; }
+
+    public DefaultObject(string name_db)
+    {
+        this.name_db = name_db;
+    }
 
 }

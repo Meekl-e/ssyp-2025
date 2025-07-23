@@ -6,9 +6,12 @@ public class RssController
 
     XElement xDB;
     List<DefaultObject> docs_to_search;
+
+    private string name_source = "";
     public WordsSearcher<string, int> searcher;
-    public RssController(string source)
+    public RssController(string source, string name_source)
     {
+        this.name_source = name_source;
         xDB = XElement.Load(source);
         bool inTag = false;
         int id_cont = 0;
@@ -16,7 +19,7 @@ public class RssController
         .Single(x => x.Name.LocalName == "channel")
         .Elements()
         .Where(x => x.Name.LocalName == "item")
-        .Select(el => new DefaultObject(){description=el.Element("description").Value, id=id_cont++}).ToList();
+        .Select(el => new DefaultObject(name_source){description=el.Element("description").Value, id=id_cont++}).ToList();
         DataSourceList dsl = new DataSourceList([.. docs_to_search.Select(o => o.description)]);
         this.searcher = new WordsSearcher<string, int>(dsl);
         Console.WriteLine($"RSS {source} Loaded");

@@ -14,15 +14,15 @@ public class RssView : DefaultView
         this.source = source;
         if (source == "cnews")
         {
-            cNController = new("https://www.cnews.ru/inc/rss/news.xml");
+            cNController = new("https://www.cnews.ru/inc/rss/news.xml", source);
         }
         if (source == "academcity")
         {
-            aCController = new("https://academcity.org/rss.xml");
+            aCController = new("https://academcity.org/rss.xml", source);
         }
         if (source == "elementy")
         {
-            elController = new("https://elementy.ru/rss/news/it");
+            elController = new("https://elementy.ru/rss/news/it", source);
         }
     }
    

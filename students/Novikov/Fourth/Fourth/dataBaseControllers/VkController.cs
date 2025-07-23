@@ -11,6 +11,17 @@ public class VkController : DefaultController
     List<DefaultObject> docs_to_search;
     public WordsSearcher<string, int> searcher;
 
+    public VkController()
+    {
+
+        xDB = XElement.Load("datasets/data.fog");
+        this.docs_to_search = xDB.Elements().Where(x => x.Name.LocalName == "post")
+        .Select(x => new DefaultObject("vk") { description=ConvertBase64(x.Element("text")?.Value), id=int.Parse(x.Attribute($"{rdf}about").Value) }).ToList();
+        DataSourceList dsl = new DataSourceList([.. docs_to_search.Select(o => o.description)]);
+        this.searcher = new WordsSearcher<string, int>(dsl);
+        Console.WriteLine("VK Loaded");
+    }
+
     public List<int> GetIds()
     {
 
@@ -121,14 +132,5 @@ public class VkController : DefaultController
 
 
 
-    public VkController()
-    {
-
-        xDB = XElement.Load("datasets/data.fog");
-        this.docs_to_search = xDB.Elements().Where(x => x.Name.LocalName == "post")
-        .Select(x => new DefaultObject() { description=ConvertBase64(x.Element("text")?.Value), id=int.Parse(x.Attribute($"{rdf}about").Value) }).ToList();
-        DataSourceList dsl = new DataSourceList([.. docs_to_search.Select(o => o.description)]);
-        this.searcher = new WordsSearcher<string, int>(dsl);
-        Console.WriteLine("VK Loaded");
-    }
+    
 }
