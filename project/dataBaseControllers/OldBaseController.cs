@@ -73,12 +73,10 @@ public class OldBaseController : DefaultController
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        <style class='font-family: Calibri;'>
-                            <td style='width:150px'>{row[7]}</th>
+                        <tr style class='font-family: Calibri;'>
+                            <td style='width:150px'>{row[7]}</td>
                             <td style='width:150px'>{row[8]}</td>
                             <td style='width:170px'>{row[9]}</td>
-                        </style>
                         </tr>
                 </table>
                 </div><br>";
@@ -119,7 +117,7 @@ public class OldBaseController : DefaultController
                     </thead>
                     <tbody>
                         <tr>
-                            <td style='width:150px'>{row[7]}</th>
+                            <td style='width:150px'>{row[7]}</td>
                             <td style='width:150px'>{row[8]}</td>
                             <td style='width:170px'>{row[9]}</td>
                         </tr>

@@ -57,7 +57,7 @@ public class TgController : DefaultController
             if (row.Count == 6 && row[0] == id.ToString())
             {
                 DateTime time = new DateTime(1970, 1, 1).AddSeconds(int.Parse(row[1]));
-                html = $"{row[5]} <i>{time.Date}</i><br>{GenerateImage(row[3])}";
+                html = $"{row[5]} <i>{time.Year}.{time.Month}.{time.Day}</i><br>{GenerateImage(row[3])}";
             }
         }
         return html.ToString();

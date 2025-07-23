@@ -53,9 +53,10 @@ public class RssController
             return true;
         }).Select(item =>
         {
+            string time = item.Elements().Single(x => x.Name.LocalName == "pubDate").Value.ToString();
             bool inTag = false;
             return new XElement("div",
-            new XElement("i", item.Elements().Single(x => x.Name.LocalName == "pubDate").Value),
+            new XElement("i", time.Substring(0, time.Length - 6)),
             new XElement("br"),
             new XElement("div", new XAttribute("class", "content12"),
             new XText(item.Elements().Single(x => x.Name.LocalName == "title").Value),
@@ -92,9 +93,10 @@ public class RssController
         {
             if (item.Name.LocalName == "item")
             {
+                string time = item.Elements().Single(x => x.Name.LocalName == "pubDate").Value;
                 bool inTag = false;
                 return new XElement("li",
-                new XElement("i", item.Elements().Single(x => x.Name.LocalName == "pubDate").Value),
+                new XElement("i", time.Substring(0, time.Length - 6)),
                 new XElement("br"),
                 new XElement("div", new XAttribute("style", "width:700px"),
                 new XText(item.Elements().Single(x => x.Name.LocalName == "title").Value),
