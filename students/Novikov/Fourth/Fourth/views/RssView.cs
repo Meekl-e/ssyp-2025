@@ -1,15 +1,31 @@
 
 
+using System.Text.Json;
+
 public class RssView : DefaultView
 {
     string source = "";
+    public RssController cNController;
+    public RssController aCController;
+    public RssController elController;
+    
     public RssView(string source)
     {
         this.source = source;
+        if (source == "cnews")
+        {
+            cNController = new("https://www.cnews.ru/inc/rss/news.xml");
+        }
+        if (source == "academcity")
+        {
+            aCController = new("https://academcity.org/rss.xml");
+        }
+        if (source == "elementy")
+        {
+            elController = new("https://elementy.ru/rss/news/it");
+        }
     }
-    public RssController cNController = new("https://www.cnews.ru/inc/rss/news.xml");
-    public RssController aCController = new("https://academcity.org/rss.xml");
-    public RssController elController = new("https://elementy.ru/rss/news/it");
+   
 
     public IResult GetFieldResult(HttpRequest request)
     {
@@ -31,6 +47,28 @@ public class RssView : DefaultView
             return Results.Content(elController.CreateField(num), "text/html");
         }
         return Results.Content(HtmlPage.GetHtml("", source), "text/html");
+    }
+    public string Search(HttpRequest request){
+        if (request.Query.ContainsKey("search")){
+            string query_search = request.Query["search"];
+            if (query_search != null && query_search != "")
+                {
+                    if (source == "cnews")
+                    {
+                        return this.cNController.Search(query_search.Split(" "));
+                    }
+                    if (source == "academcity")
+                    {
+                        return this.aCController.Search(query_search.Split(" "));
+                    }
+                    if (source == "elementy")
+                    {
+                        return this.elController.Search(query_search.Split(" "));
+                    }
+                    return "";
+                    }
+             }
+        return JsonSerializer.Serialize("");
     }
 
 

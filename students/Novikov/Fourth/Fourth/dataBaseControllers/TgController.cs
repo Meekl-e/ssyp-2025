@@ -1,13 +1,19 @@
 using System.Text.Json;
 using System.Xml.Linq;
 
-public class TgController
+public class TgController : DefaultController
 {
     APIResults? tgResults;
-    
+    List<string> docs_to_search;
+    public WordsSearcher<string, int> searcher;
+
     public TgController()
     {
         tgResults = Read().Result;
+        this.docs_to_search = tgResults.values.Where(row => row.Count == 6).Select(x=>x[5]).ToList();
+        DataSourceList dsl = new DataSourceList([.. docs_to_search]);
+        this.searcher = new WordsSearcher<string, int>(dsl);
+        Console.WriteLine("TG Loaded");
     }
 
     public List<int> GetIds()
@@ -87,5 +93,12 @@ public class TgController
         html += "</ul>";
 
         return HtmlPage.GetHtml("Телеграм канал", html);
+    }
+
+    public string Search(string[] query_search)
+    {
+        var search_result = searcher.SearchForKey(query_search).Select(x => docs_to_search[x.Item1]);
+
+        return JsonSerializer.Serialize(search_result);
     }
 }

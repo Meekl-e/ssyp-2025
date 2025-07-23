@@ -1,4 +1,5 @@
 using System.IO;
+using System.Text.Json;
 public static class HtmlPage
 {
     public static string GetHtml(string title, string snippet)
@@ -38,15 +39,19 @@ public interface DefaultView
 {
     IResult GetResult(HttpRequest request);
     IResult GetFieldResult(HttpRequest request);
-    IResult Search(HttpRequest request)
+    string Search(HttpRequest request)
     {
-        return Results.Content("", "text/json");
+        return JsonSerializer.Serialize("");
     }
+    
+    
 }
 
 public interface DefaultController
 {
+
     string CreateHtml(int start, int step);
-    string Search(string[] query_search);
+    
     string CreateField(int num);
+    public string Search(string[] query_search);
 }

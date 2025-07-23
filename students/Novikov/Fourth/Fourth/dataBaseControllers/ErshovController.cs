@@ -70,7 +70,6 @@ public class ErshovArchiveController : DefaultController
     public string Search(string[] query_search)
     {
         IEnumerable<DocObject> search_result = searcher.SearchForKey(query_search).Select(x => this.database[x.Item1]);
-        Console.WriteLine(search_result.Count());
 
         return JsonSerializer.Serialize(search_result);
     }

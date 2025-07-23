@@ -26,15 +26,15 @@ public class VkView : DefaultView
 
         return Results.Content(vkController.CreateHtml(start, step), "text/html");
     }
-    public IResult Search(HttpRequest request){
+    public string Search(HttpRequest request){
         if (request.Query.ContainsKey("search")){
             string query_search = request.Query["search"];
             if (query_search != null && query_search != "")
             {
-                return Results.Content(vkController.Search(query_search.Split(" ")), "text/json");
+                return vkController.Search(query_search.Split(" "));
             }
         }
-        return Results.Content(JsonSerializer.Serialize(""), "text/json");
+        return JsonSerializer.Serialize("");
     }
 
     public IResult GetFieldResult(HttpRequest request)

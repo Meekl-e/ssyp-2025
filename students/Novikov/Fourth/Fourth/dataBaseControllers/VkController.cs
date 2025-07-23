@@ -116,8 +116,6 @@ public class VkController : DefaultController
     public string Search(string[] query_search)
     {
         var search_result = searcher.SearchForKey(query_search).Select(x => this.docs_to_search[x.Item1]);
-        Console.WriteLine(search_result.Count());
-
         return JsonSerializer.Serialize(search_result);
     }
 

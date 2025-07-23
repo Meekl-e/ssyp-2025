@@ -1,8 +1,21 @@
 
 
+using System.Text.Json;
+
 class TgView : DefaultView
 {
     public TgController tgController = new();
+
+    public string Search(HttpRequest request){
+        if (request.Query.ContainsKey("search")){
+            string query_search = request.Query["search"];
+            if (query_search != null && query_search != "")
+            {
+                return tgController.Search(query_search.Split(" "));
+            }
+        }
+        return JsonSerializer.Serialize("");
+    }
 
     public IResult GetResult(HttpRequest request)
     {
