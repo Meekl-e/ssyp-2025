@@ -68,9 +68,10 @@ head {
 }
 
 .search {
-    padding: 10px;
-    border: 0;
-    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+    margin-right: 650px;
+    margin-top: -10px;
+
+
 }
 
 .blurred {
@@ -121,6 +122,10 @@ head {
     background-color: #eeeec7;
 }
 
+.news_search {
+    margin-top: -120px;
+    margin-left: 145px;
+}
 
 
 
