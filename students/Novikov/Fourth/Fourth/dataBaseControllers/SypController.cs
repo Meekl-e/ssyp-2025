@@ -1,4 +1,3 @@
-
 using System.Xml.Linq;
 
 public class Controller
@@ -8,14 +7,25 @@ public class Controller
     {
         XElement xDB = XElement.Load($"http://syp.iis.nsk.su/SypWebApi/xml/search/{search}");
         XElement html = new XElement("div", new XAttribute("class", "ForController"),
-        xDB.Elements().Where(item => item.Attribute("type").Value == "http://fogid.net/o/person")
-        .Select(person =>
+        xDB.Elements().Select(item =>
         {
-            string id = person.Attribute("id").Value;
-            string name = person.Elements().Single(x => x.Attribute("prop").Value == "http://fogid.net/o/name").Value;
-            return new XElement("a", new XAttribute("href", $"/person?id={id}"), $"{name}",
-            new XElement("br"));
-        }));
+            if (item.Attribute("type").Value == "http://fogid.net/o/person")
+            {
+                string id = item.Attribute("id").Value;
+                string name = item.Elements().Single(x => x.Attribute("prop").Value == "http://fogid.net/o/name").Value;
+                return new XElement("a", new XAttribute("href", $"/person?id={id}"), $"{name}",
+                new XElement("br"));
+            }
+            if (item.Attribute("type").Value == "http://fogid.net/o/org-sys")
+            {
+                string id = item.Attribute("id").Value;
+                string name = item.Elements().Single(x => x.Attribute("prop").Value == "http://fogid.net/o/name").Value;
+                return new XElement("a", new XAttribute("href", $"/studio?id={id}"), $"{name}",
+                new XElement("br"));
+            }
+            return null;
+        })
+        );
 
         return HtmlPage.GetHtml("", html.ToString());
     }
@@ -24,7 +34,7 @@ public class Controller
     {
         XElement xDB = XElement.Load($"http://syp.iis.nsk.su/SypWebApi/xml/tree/{id}");
         XElement html = new XElement("div", new XAttribute("class", "ForController"),
-        xDB.Elements().Single(x => x.Name.LocalName == "text")
+        xDB.Elements().Single(x => x.Attribute("prop").Value == "name")
             .Elements().Single(x => x.Name.LocalName == "v").Value,
         xDB.Elements().Select(x =>
         {
@@ -32,16 +42,13 @@ public class Controller
             {
                 return x.Elements().Select(studio =>
                 {
-                    string studioId = studio.Elements().Single(x => x.Attribute("prop").Value == "in-org")
-                    .Elements().Single(x => x.Attribute("tp").Value == "org-sys")
-                        .Attribute("id")
-                            .Value;
+                    XElement org = studio.Elements().Single(x => x.Attribute("prop").Value == "in-org");
+                    XElement sys = org.Elements().Single(x => x.Attribute("tp").Value == "org-sys");
+                    string studioId = sys.Attribute("id").Value;
 
-                    string studioName = studio.Elements().Single(x => x.Attribute("prop").Value == "in-org")
-                        .Elements().Single(x => x.Attribute("tp").Value == "org-sys")
-                        .Elements().Single(x => x.Attribute("prop").Value == "name")
-                        .Elements().Single(x => x.Name.LocalName == "v")
-                            .Value;
+                    XElement orgName = sys.Elements().Single(x => x.Attribute("prop").Value == "name");
+                    string studioName = orgName.Elements().Single(x => x.Name.LocalName == "v").Value;
+
                     return new XElement("div",
                     new XElement("a", new XAttribute("href", $"studio?id={studioId}"), $"{studioName}"),
                     new XElement("br"));
