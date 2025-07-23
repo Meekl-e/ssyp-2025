@@ -69,9 +69,7 @@ head {
 
 .search {
     margin-right: 650px;
-    margin-top: -10px;
-
-
+    margin-top: 10px;
 }
 
 .blurred {
@@ -127,6 +125,30 @@ head {
     margin-left: 145px;
 }
 
+.news_search1 {
+    margin-left: 800px;
+    margin-top: -75px;
+}
 
+.h1_diz {
+    margin-top: 25px;
+    margin-left: 550px;
+    margin-right: 0px
+}
+
+.tg_label_diz {
+    margin-left: 120px;
+    margin-top: -40px;
+}
+
+.tg_label_diz2 {
+    margin-left: 120px;
+    margin-top: -2px;
+}
+
+.new_cnews_diz {
+    margin-left: 120px;
+    margin-top: -2px;
+}
 
 
