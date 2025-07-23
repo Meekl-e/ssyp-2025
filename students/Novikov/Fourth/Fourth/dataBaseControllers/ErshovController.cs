@@ -46,7 +46,7 @@ public class ErshovArchiveController : DefaultController
         DataSourceList dsl = new DataSourceList([.. database.Select(o => o.description)]);
         this.searcher = new WordsSearcher<string, int>(dsl);
 
-        Console.WriteLine("Loaded");
+        Console.WriteLine("Ershov loaded");
 
     }
 
@@ -64,7 +64,7 @@ public class ErshovArchiveController : DefaultController
         ul_string += this.database.Skip(start).Take(step).Select(x => $"<li><img src='{x.url_docs.FirstOrDefault()}'/> {x.description}</li>").Aggregate((a, o) => a + o);
 
         ul_string += "</ul>";
-        return html.Replace("{{ snippet }}", ul_string).Replace("{{ title }}", "Архив Ершова");
+        return HtmlPage.GetHtml("Архив Ершова", ul_string);
     }
 
     public string Search(string[] query_search)
@@ -81,7 +81,7 @@ public class ErshovArchiveController : DefaultController
         {
             return "";
         }
-        return o.description;
+        return HtmlPage.GetHtml("Архив Ершова", o.description);
     }
 
 }

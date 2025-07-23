@@ -32,25 +32,24 @@ class SearchView
             return Results.Redirect("/");
         }
 
+        map_search[this.views[6]] = query.ContainsKey("ershArch");
         map_search[this.views[0]] = query.ContainsKey("vkN");
         map_search[this.views[1]] = query.ContainsKey("tgN");
         map_search[this.views[2]] = query.ContainsKey("oBN");
         map_search[this.views[3]] = query.ContainsKey("cNewsN");
         map_search[this.views[4]] = query.ContainsKey("academCN");
         map_search[this.views[5]] = query.ContainsKey("elementyN");
-        map_search[this.views[6]] = query.ContainsKey("ershArch");
 
         
 
         if (query.ContainsKey("search") && request.Query["search"] != "")
         {
             var r = this.views.Where(v => map_search[v]).Select(v => v.Search(request));
-            string resuls = "";
-            if (r.Count() > 0)
-            {
-                resuls = "[" + r.Aggregate((a, x) => a + "," + x) + "]";
-            }
-            return Results.Content(resuls, "text/json");
+            
+            Console.WriteLine(r.Count());
+            string resuls = "{\"array\":["+r.Aggregate((a, x)=>a+","+x)+"]}";
+            
+            return Results.Content(SearchController.ConvertJson(resuls), "text/html");
         }
         else
         {
