@@ -44,7 +44,7 @@ public class WordsSearcher<D, K>
     public (D, int)[] Search(string[] words)
     {
 
-        // .Select(w => morph.Lemmatize(w)[0])
+        // .Select(w => morph.Lemmatize(w)[0]) TODO: поставить
         var query = words.SelectMany(w => { if (wordToKeys.TryGetValue(w, out K[] karr)) return karr; else return new K[0]; })
             .GroupBy(k => k)
             .Select(igr => (igr.Key, igr.Count()))
@@ -100,7 +100,7 @@ class DataSourceList : IDataSource<string, int>
 
     public Func<string, IEnumerable<string>> GetDWFunc() // преобразователь документа в поток строк
     {
-        return (string obj) => obj.Split(" ").Distinct().Select(w => Morph.nestorMorph.Lemmatize(w).FirstOrDefault()).Where(x=>x!=null);
+        return (string obj) => obj.Split(" ").Distinct();//.Select(w => Morph.nestorMorph.Lemmatize(w).FirstOrDefault()).Where(x=>x!=null); TODO: поставить
     }
 
     public string GetElement(int key)
