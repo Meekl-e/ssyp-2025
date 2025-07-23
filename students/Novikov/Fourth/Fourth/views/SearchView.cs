@@ -32,7 +32,6 @@ class SearchView
             return Results.Redirect("/");
         }
 
-        
         map_search[this.views[0]] = query.ContainsKey("vkN");
         map_search[this.views[1]] = query.ContainsKey("tgN");
         map_search[this.views[2]] = query.ContainsKey("oBN");
