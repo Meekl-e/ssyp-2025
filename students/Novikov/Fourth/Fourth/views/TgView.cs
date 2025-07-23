@@ -1,7 +1,9 @@
 
 
-public class TgView : DefaultView
+class TgView : DefaultView
 {
+    public TgController tgController = new();
+
     public IResult GetResult(HttpRequest request)
     {
         if (!int.TryParse(request.Query["start"], out int start))
@@ -17,7 +19,7 @@ public class TgView : DefaultView
             return Results.Redirect($"/tg?start=0&step={step}");
         }
 
-        return Results.Content(TgController.CreateHtml(start, step), "text/html");
+        return Results.Content(tgController.CreateHtml(start, step), "text/html");
     }
 
     public IResult GetFieldResult(HttpRequest request)
@@ -27,7 +29,7 @@ public class TgView : DefaultView
             num = 0;
             return Results.Redirect($"/tg_field?num={num}");
         }
-        return Results.Content(TgController.CreateField(num), "text/html");
+        return Results.Content(tgController.CreateField(num), "text/html");
     }
     
 }

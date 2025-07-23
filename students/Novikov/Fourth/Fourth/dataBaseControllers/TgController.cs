@@ -3,12 +3,17 @@ using System.Xml.Linq;
 
 public class TgController
 {
-
-    public static List<int> GetIds()
+    APIResults? tgResults;
+    
+    public TgController()
     {
-        APIResults? googleResults = Read().Result;
+        tgResults = Read().Result;
+    }
+
+    public List<int> GetIds()
+    {
         List<int> ids = new();
-        foreach (List<string> row in googleResults.values)
+        foreach (List<string> row in tgResults.values)
         {
             if (row.Count == 6 && row[0] != "ID")
             {
@@ -18,12 +23,12 @@ public class TgController
         return ids;
     }
 
-    public static string GenerateImage(string file_id)
+    public string GenerateImage(string file_id)
     {
         if (file_id == "None") return "";
         return $"<img style='width:465px;' src=\"https://drive.google.com/thumbnail?authuser=0&id={file_id}&sz=w1000\" />";
     }
-    public static async Task<APIResults?> Read()
+    public async Task<APIResults?> Read()
     {
         string spreadsheetId = "12OhmW7UWUHXsOi1mrSyczMs2UBHHcoPKnJ1pt3sFGAI";
         string range = "Лист1!A:F";
@@ -37,12 +42,11 @@ public class TgController
         return result;
     }
 
-    public static string CreateField(int id)
+    public string CreateField(int id)
     {
-        APIResults? googleResults = Read().Result;
-        if (googleResults is null) return "";
+        if (tgResults is null) return "";
         string html = "";
-        foreach (List<string> row in googleResults.values)
+        foreach (List<string> row in tgResults.values)
         {
             if (row.Count == 6 && row[0] == id.ToString())
             {
@@ -53,17 +57,17 @@ public class TgController
         return html.ToString();
     }
 
-    public static string CreateHtml(int start, int step)
+    public string CreateHtml(int start, int step)
     {
-        APIResults? googleResults = Read().Result;
-        if (googleResults is null) return "";
+
+        if (tgResults is null) return "";
         string html = $@"<a href='/tg?start={start - step}&step={step}'>Назад</a>
         <a href='/tg?start={start + step}&step={step}'>Вперёд</a>
         <br>
         <ul>";
         int absPostsCount = 0;
         int postsCount = 0;
-        foreach (List<string> row in googleResults.values)
+        foreach (List<string> row in tgResults.values)
         {
             if (absPostsCount <= start)
             {

@@ -26,23 +26,30 @@ public class Controller
         XElement html = new XElement("div",
         xDB.Elements().Single(x => x.Name.LocalName == "text")
             .Elements().Single(x => x.Name.LocalName == "v").Value,
-        xDB.Elements().Single(x => x.Attribute("prop").Value == "participant")
-            .Elements().Select(studio =>
+        xDB.Elements().Select(x =>
         {
-            string studioId = studio.Elements().Single(x => x.Attribute("prop").Value == "in-org")
-            .Elements().Single(x => x.Attribute("tp").Value == "org-sys")
-                .Attribute("id")
-                    .Value;
+            if (x.Attribute("prop").Value == "participant")
+            {
+                return x.Elements().Select(studio =>
+                {
+                    string studioId = studio.Elements().Single(x => x.Attribute("prop").Value == "in-org")
+                    .Elements().Single(x => x.Attribute("tp").Value == "org-sys")
+                        .Attribute("id")
+                            .Value;
 
-            string studioName = studio.Elements().Single(x => x.Attribute("prop").Value == "in-org")
-                .Elements().Single(x => x.Attribute("tp").Value == "org-sys")
-                .Elements().Single(x => x.Attribute("prop").Value == "name")
-                .Elements().Single(x => x.Name.LocalName == "v")
-                    .Value;
-            return new XElement("div",
-            new XElement("a", new XAttribute("href", $"studio?id={studioId}"), $"{studioName}"), 
-            new XElement("br"));
+                    string studioName = studio.Elements().Single(x => x.Attribute("prop").Value == "in-org")
+                        .Elements().Single(x => x.Attribute("tp").Value == "org-sys")
+                        .Elements().Single(x => x.Attribute("prop").Value == "name")
+                        .Elements().Single(x => x.Name.LocalName == "v")
+                            .Value;
+                    return new XElement("div",
+                    new XElement("a", new XAttribute("href", $"studio?id={studioId}"), $"{studioName}"),
+                    new XElement("br"));
+                });
+            }
+            return null;
         }),
+            
         xDB.Elements().Select(imgs =>
         {
             if (imgs.Attribute("prop").Value != "reflected")

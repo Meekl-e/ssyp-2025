@@ -2,8 +2,14 @@ using System.Text.Json;
 
 public class OldBaseController
 {
+    APIResults? oBDResults;
 
-    public static List<int> GetIds()
+    public OldBaseController()
+    {
+        oBDResults = Read().Result;
+    }
+
+    public List<int> GetIds()
     {
         APIResults? results = Read().Result;
         List<int> ids = new();
@@ -17,7 +23,7 @@ public class OldBaseController
         return ids;
     }
     
-    public static async Task<APIResults?> Read()
+    public async Task<APIResults?> Read()
     {
         string spreadsheetId = "1NmIcu_vEI8ETwqaO1nHbaIykiko6vtB2tQaKTeQ7YiE";
         string range = "Sheet1!A:M";
@@ -32,12 +38,11 @@ public class OldBaseController
         return result;
     }
 
-    public static string CreateField(int id)
+    public string CreateField(int id)
     {
-        APIResults? results = Read().Result;
-        if (results is null) return "";
+        if (oBDResults is null) return "";
         string html = "";
-        foreach (List<string> row in results.values)
+        foreach (List<string> row in oBDResults.values)
         {
             for (int i = 1; i < 13; i++)
             {
@@ -75,14 +80,13 @@ public class OldBaseController
     }
     
 
-    public static string CreateHtml(int year)
+    public string CreateHtml(int year)
     {
-        APIResults? results = Read().Result;
-        if (results is null) return "";
+        if (oBDResults is null) return "";
         string html = $@"<a href='/old_base?year={year - 1}'>Назад</a>
         <a href='/old_base?year={year + 1}'>Вперёд</a>
         <ul>";
-        foreach (List<string> row in results.values)
+        foreach (List<string> row in oBDResults.values)
         {
             for (int i = 1; i < 13; i++)
             {

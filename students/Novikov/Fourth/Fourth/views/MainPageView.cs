@@ -12,7 +12,6 @@ class MainPageView : DefaultView
     RssView cNView;
     RssView aCView;
     RssView elView;
-    
 
     public IResult GetResult(HttpRequest request)
     {
@@ -26,13 +25,13 @@ class MainPageView : DefaultView
         }
         if (!int.TryParse(request.Query["tgN"], out int tgN))
         {
-            List<int> ids = TgController.GetIds();
+            List<int> ids = tg.tgController.GetIds();
             tgN = ids[rand.Next(0, ids.Count - 1)];
             redirect = true;
         }
         if (!int.TryParse(request.Query["oBN"], out int oBN))
         {
-            List<int> ids = OldBaseController.GetIds();
+            List<int> ids = old.oldBaseController.GetIds();
             oBN = ids[rand.Next(0, ids.Count - 1)];
             redirect = true;
         }

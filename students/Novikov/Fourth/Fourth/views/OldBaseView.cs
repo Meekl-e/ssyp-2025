@@ -2,6 +2,8 @@
 
 class OldBaseView : DefaultView
 {
+    public OldBaseController oldBaseController = new();
+
     public IResult GetFieldResult(HttpRequest request)
     {
         if (!int.TryParse(request.Query["num"], out int num))
@@ -9,7 +11,7 @@ class OldBaseView : DefaultView
             num = 0;
             return Results.Redirect($"/old_base_field?num={num}");
         }
-        return Results.Content(OldBaseController.CreateField(num), "text/html");
+        return Results.Content(oldBaseController.CreateField(num), "text/html");
     }
 
     public IResult GetResult(HttpRequest request)
@@ -23,6 +25,6 @@ class OldBaseView : DefaultView
             return Results.Redirect("/old_base?year=2017");
         }
 
-        return Results.Content(OldBaseController.CreateHtml(year), "text/html");
+        return Results.Content(oldBaseController.CreateHtml(year), "text/html");
     }
 }
