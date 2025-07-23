@@ -38,7 +38,10 @@ public interface DefaultView
 {
     IResult GetResult(HttpRequest request);
     IResult GetFieldResult(HttpRequest request);
-    IResult Search(HttpRequest request);
+    IResult Search(HttpRequest request)
+    {
+        return Results.Content("", "text/json");
+    }
 }
 
 public interface DefaultController
