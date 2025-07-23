@@ -1,49 +1,90 @@
-            body {
-                font-family: Calibri;
-                background-color: #ffffd8;
-            }
+body {
+    font-family: Calibri;
+    background-color: #ffffd8;
 
-            head {
-                font-family: Calibri;
-            }
+}
 
-            .my-article {
-                border-radius: 10px;
-                margin: 20px 12px 20px 12px;
+head {
+    font-family: Calibri;
+}
 
-            }
-            .my-.art-heading {
-                margin-bottom: 14px;
-                margin-top: 14px;
-            }
-            .my-container_w {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
+.my-article {
+    border-radius: 10px;
+    margin: 20px 12px 20px 12px;
+
+}
+
+.my-.art-heading {
+    margin-bottom: 14px;
+    margin-top: 14px;
+}
+
+.my-container_w {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
 
 
-            }
-            .my-box {
-                width: 500px;
-                min-height:500px;
-                border-radius: 20px;
-                background-color: #eeeec7 ;
-            }
+.my-box {
+    width: 500px;
+    min-height: 500px;
+    border-radius: 20px;
+    background-color: #eeeec7;
+}
 
-            .iframe_image {
-                width: 480px;
+.iframe_image {
+    width: 480px;
 
-            }
+}
 
-            .rubrika {
-                border-radius: 80px;
-                background-color: #ffebb6;
-                font-size: large;
-                color: Black;
-                border: 1px solid black;
-            }
+.rubrika {
+    border-radius: 80px;
+    background-color: #ffebb6;
+    font-size: large;
+    color: Black;
+    border: 1pt solid black;
 
-            .contetn12 {
-                width: 470px;
-            }
+}
 
+.contetn12 {
+    width: 470px;
+}
+
+.btn-new {
+    border-radius: 10px;
+    color: white;
+    transition: .2s linear;
+    background: #0B63F6;
+}
+
+.btn-new:hover {
+    -webkit-transform: rotateZ(5deg);
+    -ms-transform: rotateZ(5deg);
+    transform: rotateZ(5deg);
+}
+
+.search {
+    padding: 10px;
+    border: 0;
+    box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+}
+
+.blurred {
+    filter: blur(5px); /* Начальное размытие */
+    transition: filter 2s ease; /* Плавное изменение */
+    border-radius: 10px;
+    margin: 20px 12px 20px 12px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.blurred.loaded {
+    filter: blur(0); /* Убираем размытие при загрузке */
+}
+
+
+
+}
