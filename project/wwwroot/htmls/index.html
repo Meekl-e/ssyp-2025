@@ -8,23 +8,17 @@
     <link rel="icon" type="image/png" href="/datasets/image/logossyp.png">
 
     <meta charset='utf-8'>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel='stylesheet' href='css/index.css'>
     <script src='javascripts/script.js'></script>
 
 </head>
 
 <body>
-<div >
+<div class='header'>
 
-<div class='header' >
-
-
-    <a href='/'> <img src='/datasets/image/logossyp.png' style='height:50px;margin-left: 16px;margin-top: 5px;'> </a>
-
-
-
-
+    <a href='/'> <img src='/datasets/image/logossyp.png' style='height:50px;margin-left: 16px;margin-top: 5px;'>
+    </a>
 
 
     <div class='my-container_w'>
@@ -32,31 +26,30 @@
         <a href='/vk?start=0&step=10' class="link">ВКонтакте</a> |
         <a href='/tg?start=0&step=10' class="link">Телеграм</a> |
         <a href='/old_base?year=2017' class="link">Старая БЗ</a> |
-        <a href='/cnews'class="link">Новости</a> |
-        <a href='/academcity'class="link">Новости Академгородка</a> |
+        <a href='/cnews' class="link">Новости</a> |
+        <a href='/academcity' class="link">Новости Академгородка</a> |
+        <a href='/elementy' class="link">Новости науки</a> |
         <a href='/' class="link">Обновить</a> |
-        <div class="h1_diz"><h1>Окна в мир ЛШЮП, сезон 2025 года</h1>Окна созданы мастерской №3 'Веб и сервисы</div>
+
     </div>
-    <div class='my-container_w' style='font-size:small;'>
+    <div class=" my-container_w h1_diz">
+        <h1>Окна в мир ЛШЮП, сезон 2025 года</h1>
+    </div>
+    <div class='my-container_w' style='font-size:small;  margin-top: 80px'>
         <span> +7 (383) 330-80-51 +7 (913) 713-27-64</span>
-        <a href='https://t.me/LSHUP'> <img style="margin-top: 3px;" src='/datasets/image/logotelegram.png' height='20'></a>
-        <a href='https://vk.com/lshup'> <img style="margin-top: 3px " src='/datasets/image/logoVK.png' height='20'> </a>
+        <a href='https://t.me/LSHUP'> <img style="margin-top: 3px;" src='/datasets/image/logotelegram.png'
+                                           height='20'></a>
+        <a href='https://vk.com/lshup'> <img style="margin-top: 3px " src='/datasets/image/logoVK.png' height='20'>
+        </a>
 
     </div>
 </div>
 
-</div>
-<!--style='display:flex;flex-direction:column;margin-left: 40px;'-->
 
-
-
-
-<div class = 'search'>
-<!--    syp_search?search=-->
+<div class='search'>
+    <!--    syp_search?search=-->
     <form style="margin-left: 110px" action="search" method="get">
-        <input type="text" name="search" placeholder="Поиск...">
-
-
+        <input type="text" name="search" style="width: 400px" placeholder="Поиск по базам данных...">
         <input id="Ershov" name="ershArch" type="checkbox">
         <label for="Ershov">БЗ Ершова</label>
 
@@ -67,14 +60,12 @@
         <label for="tg_cb">БЗ ТГ</label>
 
 
-
-            <input id="old_bz" name="oBN" type="checkbox">
-            <label for="old_bz">БЗ со старыми мастерскими</label>
-
+        <input id="old_bz" name="oBN" type="checkbox">
+        <label for="old_bz">БЗ со старыми мастерскими</label>
 
 
-            <input id="cNews1" name="cNewsN" type="checkbox">
-            <label for="cNews1">Новости cNews</label>
+        <input id="cNews1" name="cNewsN" type="checkbox">
+        <label for="cNews1">Новости cNews</label>
 
 
         <input id="ac_cb" name="academCN" type="checkbox">
@@ -85,14 +76,13 @@
         <button type="submit" class="btn-new">Искать</button>
     </form>
     <form style="margin-left: 110px" action="syp_search?search=" method="get">
-        <input type="text" name="search" placeholder="Поиск...">
+        <input type="text" name="search" style="width: 400px" placeholder="Поиск по данным ЛШЮП...">
         <button type="submit" class="btn-new">Искать</button>
     </form>
 </div>
 
 
-<div class = "blurred" id ="blurred_el">
-<div style='' class='my-container_w'>
+<div class="blurred" id="blurred_el">
     <div class='my-article' style=''>
         <div class='my-box' style=''>
             <div class='rubrika' style=''>Информация про ЛШЮП</div>
@@ -103,25 +93,29 @@
             <img src='/datasets/image/ngy.png' style='width:500px;'/>
         </div>
     </div>
-</div>
     <div class='my-article'>
         <div class='my-box'>
             <a name='po'>
-            <div class='rubrika'>Что мы используем?</div>
-            <h3 class='my-art-heading'><a name="top">Используемое ПО</a></h3>
-            Обучение проходит за компьютерами оснащенными
-            : VisualStudioCode2019, WebStorm, VisualStudioCode. Используемые языки(кликабельно):
-            <a href='https://learn.microsoft.com/ru-ru/dotnet/csharp/'><img src='/datasets/image/logocsharp.png' height='40'/></a>
-            <a href='https://developer.mozilla.org/ru/docs/Web/HTML'><img src='/datasets/image/logohtml.png' height='40'/></a>
-            <a href='https://developer.mozilla.org/ru/docs/Web/CSS'><img src='/datasets/image/logocss.png' height='40'/></a>
-            <a href='https://developer.mozilla.org/ru/docs/Web/JavaScript'><img src='/datasets/image/logojs.png' height='40'/></a>
-            <img src='datasets/image/po.png' style='width:500px;'/>
+                <div class='rubrika'>Что мы используем?</div>
+                <h3 class='my-art-heading'><a name="top">Используемое ПО</a></h3>
+                Обучение проходит за компьютерами оснащенными
+                : VisualStudioCode2019, WebStorm, VisualStudioCode. Используемые языки(кликабельно):
+                <a href='https://learn.microsoft.com/ru-ru/dotnet/csharp/'><img src='/datasets/image/logocsharp.png'
+                                                                                height='40'/></a>
+                <a href='https://developer.mozilla.org/ru/docs/Web/HTML'><img src='/datasets/image/logohtml.png'
+                                                                              height='40'/></a>
+                <a href='https://developer.mozilla.org/ru/docs/Web/CSS'><img src='/datasets/image/logocss.png'
+                                                                             height='40'/></a>
+                <a href='https://developer.mozilla.org/ru/docs/Web/JavaScript'><img src='/datasets/image/logojs.png'
+                                                                                    height='40'/></a>
+                <img src='datasets/image/po.png' style='width:500px;'/>
             </a>
         </div>
     </div>
     <div class='my-article' style=''>
         <div class='my-box' style=''>
-            <div class='rubrika' style='width:100%; background-color:#ffebb6; font-size:large; color:black; '>Как попасть к нам в ЛШЮП?
+            <div class='rubrika' style='width:100%; background-color:#ffebb6; font-size:large; color:black; '>Как
+                попасть к нам в ЛШЮП?
             </div>
             <h3 class='my-art-heading'>Отборочный этап</h3>
             Для участия в ЛШЮП необходимо будет заполнить форму для регистрации и пройти очное собеседование.
@@ -133,7 +127,8 @@
     <div class='my-article' style=''>
         <div class='my-box' style=''>
             <div class='rubrika'
-                 style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>Что нас ждёт в ЛШЮП?
+                 style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>Что нас ждёт
+                в ЛШЮП?
             </div>
             <h3 class='my-art-heading'>Обучение</h3>
             Во время летней школы учащихся ждут: работа в мастерских, мастер-классы от практикующих специалистов,
@@ -144,17 +139,15 @@
     </div>
 
 
-
-    <div style="" class="my-container_w">
-        <div class=".my-.art-heading"></div>
-        <div class='my-article' style=''>
-            <div class='my-box' style=''>
-                <div class='rubrika'
-                     style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
-                </div>
-                <h3 class='my-art-heading'>Элементи</h3>
-                <iframe style="width: 500px; min-height: 500px;" src="/elementy_main_field?num={{ elementy }}"></iframe>
+    <div class=".my-.art-heading"></div>
+    <div class='my-article' style=''>
+        <div class='my-box' style=''>
+            <div class='rubrika'
+                 style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База
+                данных
             </div>
+            <h3 class='my-art-heading'>Элементи</h3>
+            <iframe style="width: 500px; min-height: 500px;" src="/elementy_main_field?num={{ elementy }}"></iframe>
         </div>
     </div>
 
@@ -166,114 +159,119 @@
             <iframe style="width: 500px; min-height: 500px;" src="/tg_main_field?num={{ tg }}"></iframe>
         </div>
     </div>
-    </div>
+</div>
 <div class=".my-.art-heading">
-<div style="" class="my-container_w">
-    <div class=".my-.art-heading"></div>
-    <div class='my-article' style=''>
-        <div class='my-box' style=''>
-            <div class='rubrika'
-                 style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
-            </div>
-            <h3 class='my-art-heading'>ВКонтакте</h3>
-            <iframe style="width: 500px; min-height: 500px;" src="/vk_main_field?num={{ vk }}"></iframe>
-
-
-        </div>
-    </div>
-
-        <div style="" class="my-container_w">
-            <div class='my-article' style=''>
-                <div class='my-box' style=''>
-                    <div class='rubrika'
-                         style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
-                    </div>
-                    <h3 class='my-art-heading'>Старая база данных</h3>
-                    <iframe style="width: 500px; min-height: 500px;" src="/old_base_main_field?num={{ oB }}"></iframe>
-                </div>
-            </div>
-        </div>
-        <div style="" class="my-container_w">
-            <div class='my-article' style=''>
-                <div class='my-box' style=''>
-                    <div class='rubrika'
-                         style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
-                    </div>
-                    <h3 class='my-art-heading'>CNews</h3>
-                    <iframe style="width: 500px; min-height: 500px;" src="/cnews_main_field?num={{ cNews }}"></iframe>
-                </div>
-            </div>
-        </div>
-        <div style="" class="my-container_w">
-            <div class='my-article' style=''>
-                <div class='my-box' style=''>
-                    <div class='rubrika'
-                         style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
-                    </div>
-                    <h3 class='my-art-heading'>Новости Академгородка</h3>
-                    <iframe style="width: 500px; min-height: 500px;" src="/academcity_main_field?num={{ academC }}"></iframe>
-                </div>
-            </div>
-        </div>
-
     <div style="" class="my-container_w">
+        <div class=".my-.art-heading"></div>
         <div class='my-article' style=''>
             <div class='my-box' style=''>
                 <div class='rubrika'
-                     style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
+                     style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База
+                    данных
+                </div>
+                <h3 class='my-art-heading'>ВКонтакте</h3>
+                <iframe style="width: 500px; min-height: 500px;" src="/vk_main_field?num={{ vk }}"></iframe>
+
+
+            </div>
+        </div>
+
+        <div class='my-article' style=''>
+            <div class='my-box' style=''>
+                <div class='rubrika'
+                     style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База
+                    данных
+                </div>
+                <h3 class='my-art-heading'>Старая база данных</h3>
+                <iframe style="width: 500px; min-height: 500px;" src="/old_base_main_field?num={{ oB }}"></iframe>
+            </div>
+        </div>
+
+        <div class='my-article' style=''>
+            <div class='my-box' style=''>
+                <div class='rubrika'
+                     style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База
+                    данных
+                </div>
+                <h3 class='my-art-heading'>CNews</h3>
+                <iframe style="width: 500px; min-height: 500px;" src="/cnews_main_field?num={{ cNews }}"></iframe>
+            </div>
+        </div>
+
+        <div class='my-article' style=''>
+            <div class='my-box' style=''>
+                <div class='rubrika'
+                     style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База
+                    данных
+                </div>
+                <h3 class='my-art-heading'>Новости Академгородка</h3>
+                <iframe style="width: 500px; min-height: 500px;"
+                        src="/academcity_main_field?num={{ academC }}"></iframe>
+            </div>
+        </div>
+
+
+        <div class='my-article' style=''>
+            <div class='my-box' style=''>
+                <div class='rubrika'
+                     style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База
+                    данных
                 </div>
                 <h3 class='my-art-heading'>Архив Ершова</h3>
-                <iframe style="width: 500px; min-height: 500px;" src="/ershov_archive_main_field?num={{ ershArch }}"></iframe>
+                <iframe style="width: 500px; min-height: 500px;"
+                        src="/ershov_archive_main_field?num={{ ershArch }}"></iframe>
             </div>
         </div>
-    </div>
 
-    <div class='my-article' style=''>
-        <a name = "master"></a>
-        <div class='my-box' style=''>
-            <div class='rubrika'
-                 style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>Что нас ждёт в ЛШЮП?
+
+        <div class='my-article' style=''>
+            <a name="master"></a>
+            <div class='my-box' style=''>
+                <div class='rubrika'
+                     style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>Что нас
+                    ждёт в ЛШЮП?
+                </div>
+                <h3 class='my-art-heading'>Мастерская №3 «Web и сервисы — открываем мир!»</h3>
+                Web-технологии и информационные системы всё активнее используют сервисы. Сервисы существенно
+                повышают гибкость ИТ-решений и упрощают разработку. В мастерской мы познакомимся с основами
+                клиент-сервисной архитектуры, с языком C#, языками разметки и обмена данных HTML, XML, JSON. Это даст
+                нам возможность создать информационную систему в виде Web-приложения, которая будет через сервисы
+                использовать разные внешние источники данных по тематике ЛШЮП. Будут использованы: историческая база
+                данных и документов ЛШЮП, Telegram-канал и группа в VK, RSS-каналы и др. Результатом будет Web-сайт,
+                знакомящий читателя с разными аспектами системы летних школ юных программистов (история, люди,
+                проекты, фотографии, видео).
+
+                Основной технологией создания Web-приложения будет современная, высокоэффективная среда ASP.NET,
+                основным
+                языком программирования будет C#. Инструменты (система программирования, язык программирования, языки
+                разметки) будут осваиваться в минимальном, но достаточном объеме. Поскольку сервисная архитектура
+                позволяет разработчикам сосредотачиваться на конкретных сервисах, каждый ученик сможет решать посильную
+                ему задачу, лучшие ученики будут объединять эти задачи в единую систему.
+
+                Мастерская предназначена не для тех, кто ищет в Интернете подходящее решение, чтобы изменить в нем пару
+                строчек и назвать его своим, а для тех, кому интересно понять, как все устроено, и писать свой код
+                реализации. Желательны ученики с опытом работы над программами на языке высокого уровня.
+                <img src='/datasets/image/web.png' style='width:500px;'/>
+
             </div>
-            <h3 class='my-art-heading'>Мастерская №3 «Web и сервисы — открываем мир!»</h3>
-            Web-технологии и информационные системы всё активнее используют сервисы. Сервисы существенно
-            повышают гибкость ИТ-решений и упрощают разработку. В мастерской мы познакомимся с основами клиент-сервисной архитектуры, с языком C#, языками разметки и обмена данных HTML, XML, JSON. Это даст нам возможность создать информационную систему в виде Web-приложения, которая будет через сервисы
-            использовать разные внешние источники данных по тематике ЛШЮП. Будут использованы: историческая база данных и документов ЛШЮП, Telegram-канал и группа в VK, RSS-каналы и др. Результатом будет Web-сайт, знакомящий читателя с разными аспектами системы летних школ юных программистов (история, люди,
-            проекты, фотографии, видео).
-
-            Основной технологией создания Web-приложения будет современная, высокоэффективная среда ASP.NET, основным
-            языком программирования будет C#. Инструменты (система программирования, язык программирования, языки разметки) будут осваиваться в минимальном, но достаточном объеме. Поскольку сервисная архитектура позволяет разработчикам сосредотачиваться на конкретных сервисах, каждый ученик сможет решать посильную
-            ему задачу, лучшие ученики будут объединять эти задачи в единую систему.
-
-            Мастерская предназначена не для тех, кто ищет в Интернете подходящее решение, чтобы изменить в нем пару
-            строчек и назвать его своим, а для тех, кому интересно понять, как все устроено, и писать свой код реализации. Желательны ученики с опытом работы над программами на языке высокого уровня.
-            <img src='/datasets/image/web.png' style='width:500px;'/>
-
         </div>
+
     </div>
+</div>
+
 
 </div>
 </div>
-
-
-
-
-
-
-        </div>
-    </div>
 </div>
 
 <footer>
-<div class='my-container_w' style='width:100%;height: 200px; background-color: #ffebb6;justify-content: space-between;'>
 
-    <h3>Авторы: <a href="https://github.com/meekl-e/">Ноговицин Михаил</a>, <a href="https://github.com/atikin5">Новиков Никита</a>, <a href="https://github.com/Triksoni">Пирогов Антон</a>. </h3>
-    <a href="https://ssyp.ru/" style="margin-left: 30px;"> <h3>Сайт ЛШЮПа</h3></a>
-
-</div>
-</div>
-
-
-
+    <h6>Авторы: Мастерская №3 «Web и сервисы - открываем мир». Мастер: <a href="https://github.com/agmarchuk/">Марчук
+        Александр Гурьевич</a>
+        Подмастерье: <a href="https://github.com/meekl-e/">Ноговицин Михаил</a>.
+        Участники: <a href="https://github.com/atikin5">Новиков Никита</a>, <a href="https://github.com/Triksoni">Пирогов
+            Антон</a>. </h6>
+    <a href="https://ssyp.ru/" style="margin-left: 30px;"><h3>Сайт ЛШЮПа</h3></a>
 
 </footer>
 </body>

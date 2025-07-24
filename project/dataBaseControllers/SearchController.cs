@@ -9,7 +9,7 @@ public class SearchController
         var doc1 = JsonConvert.DeserializeXmlNode(json, "root");
         XDocument xDoc = XDocument.Load(new XmlNodeReader(doc1));
         XElement xml = XElement.Parse(xDoc.ToString());
-        bool results = true;
+        int results = 0;
         XElement html = new XElement("ul",
         xml.Elements().Select(database =>
         {
@@ -27,10 +27,10 @@ public class SearchController
                     );
                 });
             }
-            results = false;
+            results += 1;
             return null;
         }));
-        if (results)
+        if (results != xml.Elements().Count())
         {
             return HtmlPage.GetHtml("Поиск", html.ToString());
         }
