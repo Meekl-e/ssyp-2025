@@ -40,14 +40,14 @@ class SearchView
         map_search[this.views[4]] = query.ContainsKey("academCN");
         map_search[this.views[5]] = query.ContainsKey("elementyN");
 
-        
 
-        if (query.ContainsKey("search") && request.Query["search"] != "")
+
+        if (query.ContainsKey("search") && request.Query["search"] != "" && map_search.Values.Where(x=>x==true).Count()>0)
         {
             var r = this.views.Where(v => map_search[v]).Select(v => v.Search(request));
-            
-            string resuls = "{\"array\":["+r.Aggregate((a, x)=>a+","+x)+"]}";
-            
+
+            string resuls = "{\"array\":[" + r.Aggregate((a, x) => a + "," + x) + "]}";
+
             return Results.Content(SearchController.ConvertJson(resuls), "text/html");
         }
         else

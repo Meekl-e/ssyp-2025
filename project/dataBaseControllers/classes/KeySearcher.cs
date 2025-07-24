@@ -27,13 +27,10 @@ public class WordsSearcher<D, K>
     private Func<D, IEnumerable<string>> dwFunc;
     private Dictionary<string, K[]> wordToKeys;
 
-    private NestorMorph morph;
-
     public WordsSearcher(IDataSource<D, K> dsource)
     {
         this.dsource = dsource;
         this.dwFunc = dsource.GetDWFunc();
-        this.morph = morph;
 
         wordToKeys = dsource.ElementsDK()
             .SelectMany(dk => dwFunc(dk.Item1)
@@ -44,8 +41,7 @@ public class WordsSearcher<D, K>
     public (D, int)[] Search(string[] words)
     {
 
-        // .Select(w => morph.Lemmatize(w)[0]) TODO: поставить
-        var query = words.SelectMany(w => { if (wordToKeys.TryGetValue(w, out K[] karr)) return karr; else return new K[0]; })
+        var query = words.Select(w => Morph.nestorMorph.Lemmatize(w).FirstOrDefault()).SelectMany(w => { if (wordToKeys.TryGetValue(w, out K[] karr)) return karr; else return new K[0]; })
             .GroupBy(k => k)
             .Select(igr => (igr.Key, igr.Count()))
             .OrderByDescending(k => k.Item2)
@@ -58,8 +54,7 @@ public class WordsSearcher<D, K>
     public (K, int)[] SearchForKey(string[] words)
     {
 
-        // .Select(w => morph.Lemmatize(w)[0])
-        var query = words.SelectMany(w => { if (wordToKeys.TryGetValue(w, out K[] karr)) return karr; else return new K[0]; })
+        var query = words.Select(w =>Morph.nestorMorph.Lemmatize(w).FirstOrDefault()).Where(x=>x!=null).SelectMany(w => { if (wordToKeys.TryGetValue(w, out K[] karr)) return karr; else return new K[0]; })
             .GroupBy(k => k)
             .Select(igr => (igr.Key, igr.Count()))
             .OrderByDescending(k => k.Item2)
@@ -100,7 +95,7 @@ class DataSourceList : IDataSource<string, int>
 
     public Func<string, IEnumerable<string>> GetDWFunc() // преобразователь документа в поток строк
     {
-        return (string obj) => obj.Split(" ").Distinct();//.Select(w => Morph.nestorMorph.Lemmatize(w).FirstOrDefault()).Where(x=>x!=null); TODO: поставить
+        return (string obj) => obj.Split(" ").Distinct().Select(w => Morph.nestorMorph.Lemmatize(w).FirstOrDefault()).Where(x=>x != null);
     }
 
     public string GetElement(int key)
