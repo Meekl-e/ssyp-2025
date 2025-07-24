@@ -38,7 +38,7 @@ public class RssController
         return xDB.Elements().Single(x => x.Name.LocalName == "channel").Elements().Where(x => x.Name.LocalName == "item").Count();
     }
 
-    public string CreateField(int num)
+    public string CreateField(int num, bool onMainPage)
     {
         int absItemsCount = 0;
         XElement xHtml = new("div",
@@ -80,9 +80,14 @@ public class RssController
                 return true;
             }))));
         }));
-
-        return xHtml.ToString();
+        if (onMainPage)
+        {
+            return xHtml.ToString();
+        }
+        return HtmlPage.GetHtml("Rss", xHtml.ToString());
     }
+
+    
 
 
     public string CreateHtml()

@@ -46,7 +46,7 @@ public class OldBaseController : DefaultController
         return result;
     }
 
-    public string CreateField(int id)
+    public string CreateField(int id, bool onMainPage)
     {
         if (oBDResults is null) return "";
         string html = "";
@@ -82,7 +82,11 @@ public class OldBaseController : DefaultController
                 </div><br>";
             }
         }
-        return html;
+        if (onMainPage)
+        {
+            return html;
+        }
+        return HtmlPage.GetHtml("Старая база", html);
     }
     
 

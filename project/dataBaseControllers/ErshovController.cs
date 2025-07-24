@@ -80,12 +80,16 @@ public class ErshovArchiveController : DefaultController
         return JsonSerializer.Serialize(search_result);
     }
 
-    public string CreateField(int num)
+    public string CreateField(int num, bool onMainPage)
     {
         var o = this.database.SingleOrDefault(x => x.id == num);
         if (o == null)
         {
             return "";
+        }
+        if (onMainPage)
+        {
+            return o.description + "<br>" + o.url_docs.Select(u => $"<img src={u} width=\"200px\"></img>").Aggregate((acc, w) => acc + w);
         }
         return HtmlPage.GetField("Архив Ершова", o.description + "<br>" + o.url_docs.Select(u => $"<img src={u} width=\"200px\"></img>").Aggregate((acc, w) => acc + w));
     }

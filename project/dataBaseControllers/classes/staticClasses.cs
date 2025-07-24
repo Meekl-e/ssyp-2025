@@ -52,7 +52,7 @@ public interface DefaultController
 
     string CreateHtml(int start, int step);
 
-    string CreateField(int num);
+    string CreateField(int num, bool onMainPage);
     public string Search(string[] query_search);
 }
 

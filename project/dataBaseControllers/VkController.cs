@@ -31,7 +31,7 @@ public class VkController : DefaultController
         return ids;
     }
 
-    public string CreateField(int id)
+    public string CreateField(int id, bool onMainPage)
     {
         XElement xHtml = new("div",
         xDB.Elements().Where(post => post.Name.LocalName == "post")
@@ -63,6 +63,10 @@ public class VkController : DefaultController
                             return null;
                         })));
         }));
+        if (onMainPage)
+        {
+            return xHtml.ToString();
+        }
         return HtmlPage.GetField("", xHtml.ToString());
     }
 

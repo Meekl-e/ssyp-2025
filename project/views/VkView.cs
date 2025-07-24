@@ -6,7 +6,7 @@ using Nestor;
 public class VkView : DefaultView
 {
     public VkController vkController = new();
-    
+
 
 
     public IResult GetResult(HttpRequest request)
@@ -26,8 +26,11 @@ public class VkView : DefaultView
 
         return Results.Content(vkController.CreateHtml(start, step), "text/html");
     }
-    public string Search(HttpRequest request){
-        if (request.Query.ContainsKey("search")){
+
+    public string Search(HttpRequest request)
+    {
+        if (request.Query.ContainsKey("search"))
+        {
             string query_search = request.Query["search"];
             if (query_search != null && query_search != "")
             {
@@ -45,7 +48,18 @@ public class VkView : DefaultView
             return Results.Redirect($"/vk_field?num={num}");
         }
 
-        return Results.Content(vkController.CreateField(num), "text/html");
+        return Results.Content(vkController.CreateField(num, false), "text/html");
+    }
+    
+    public IResult GetMainFieldResult(HttpRequest request)
+    {
+        if (!int.TryParse(request.Query["num"], out int num))
+        {
+            num = 0;
+            return Results.Redirect($"/vk_field?num={num}");
+        }
+
+        return Results.Content(vkController.CreateField(num, true), "text/html");
     }
     
 }

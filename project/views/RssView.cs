@@ -36,38 +36,64 @@ public class RssView : DefaultView
         }
         if (source == "cnews")
         {
-            return Results.Content(cNController.CreateField(num), "text/html");
+            return Results.Content(cNController.CreateField(num, false), "text/html");
         }
         if (source == "academcity")
         {
-            return Results.Content(aCController.CreateField(num), "text/html");
+            return Results.Content(aCController.CreateField(num, false), "text/html");
         }
         if (source == "elementy")
         {
-            return Results.Content(elController.CreateField(num), "text/html");
+            return Results.Content(elController.CreateField(num, false), "text/html");
         }
         return Results.Content(HtmlPage.GetHtml("", source), "text/html");
     }
-    public string Search(HttpRequest request){
-        if (request.Query.ContainsKey("search")){
+
+    public IResult GetMainFieldResult(HttpRequest request)
+    {
+        if (!int.TryParse(request.Query["num"], out int num))
+        {
+            num = 0;
+            return Results.Redirect($"/{source}_field?num={num}");
+        }
+        if (source == "cnews")
+        {
+            return Results.Content(cNController.CreateField(num, true), "text/html");
+        }
+        if (source == "academcity")
+        {
+            return Results.Content(aCController.CreateField(num, true), "text/html");
+        }
+        if (source == "elementy")
+        {
+            return Results.Content(elController.CreateField(num, true), "text/html");
+        }
+        return Results.Content(HtmlPage.GetHtml("", source), "text/html");
+    }
+    
+
+    public string Search(HttpRequest request)
+    {
+        if (request.Query.ContainsKey("search"))
+        {
             string query_search = request.Query["search"];
             if (query_search != null && query_search != "")
+            {
+                if (source == "cnews")
                 {
-                    if (source == "cnews")
-                    {
-                        return this.cNController.Search(query_search.Split(" "));
-                    }
-                    if (source == "academcity")
-                    {
-                        return this.aCController.Search(query_search.Split(" "));
-                    }
-                    if (source == "elementy")
-                    {
-                        return this.elController.Search(query_search.Split(" "));
-                    }
-                    return "";
-                    }
-             }
+                    return this.cNController.Search(query_search.Split(" "));
+                }
+                if (source == "academcity")
+                {
+                    return this.aCController.Search(query_search.Split(" "));
+                }
+                if (source == "elementy")
+                {
+                    return this.elController.Search(query_search.Split(" "));
+                }
+                return "";
+            }
+        }
         return JsonSerializer.Serialize("");
     }
 

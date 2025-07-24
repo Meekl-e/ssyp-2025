@@ -48,7 +48,7 @@ public class TgController : DefaultController
         return result;
     }
 
-    public string CreateField(int id)
+    public string CreateField(int id, bool onMainPage)
     {
         if (tgResults is null) return "";
         string html = "";
@@ -60,7 +60,11 @@ public class TgController : DefaultController
                 html = $"{row[5]} <i>{time.Year}.{time.Month}.{time.Day}</i><br>{GenerateImage(row[3])}";
             }
         }
-        return html.ToString();
+        if (onMainPage)
+        {
+            return html.ToString();
+        }
+        return HtmlPage.GetHtml("Телеграм", html.ToString());
     }
 
     public string CreateHtml(int start, int step)

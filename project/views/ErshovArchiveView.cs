@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using Nestor;
 using System.Text.Json;
 
 class ErshovArchiveView : DefaultView
@@ -57,7 +50,18 @@ class ErshovArchiveView : DefaultView
             return Results.Redirect($"/ershov_archive_field?num={num}");
         }
 
-        return Results.Content(ershov_controller.CreateField(num), "text/html");
+        return Results.Content(ershov_controller.CreateField(num, false), "text/html");
+    }
+
+    public IResult GetMainFieldResult(HttpRequest request)
+    {
+        if (!int.TryParse(request.Query["num"], out int num))
+        {
+            num = 0;
+            return Results.Redirect($"/ershov_archive_main_field?num={num}");
+        }
+
+        return Results.Content(ershov_controller.CreateField(num, true), "text/html");
     }
     
     public IResult GetSearchResult(HttpRequest request)
