@@ -46,7 +46,6 @@ class SearchView
         {
             var r = this.views.Where(v => map_search[v]).Select(v => v.Search(request));
             
-            Console.WriteLine(r.Count());
             string resuls = "{\"array\":["+r.Aggregate((a, x)=>a+","+x)+"]}";
             
             return Results.Content(SearchController.ConvertJson(resuls), "text/html");

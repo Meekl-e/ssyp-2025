@@ -9,6 +9,7 @@ public class SearchController
         var doc1 = JsonConvert.DeserializeXmlNode(json, "root");
         XDocument xDoc = XDocument.Load(new XmlNodeReader(doc1));
         XElement xml = XElement.Parse(xDoc.ToString());
+        bool results = true;
         XElement html = new XElement("ul",
         xml.Elements().Select(database =>
         {
@@ -26,10 +27,13 @@ public class SearchController
                     );
                 });
             }
+            results = false;
             return null;
         }));
-        return HtmlPage.GetHtml("", html.ToString());
-        // XElement html = xml;
-        // return html.ToString();
+        if (results)
+        {
+            return HtmlPage.GetHtml("Поиск", html.ToString());
+        }
+        return HtmlPage.GetHtml("Поиск", "<h1>По данному запросу ничего не найдено</h1>"); 
     }
 }

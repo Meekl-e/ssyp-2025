@@ -29,11 +29,11 @@ public class Controller
             })
             );
 
-            return HtmlPage.GetHtml("", html.ToString());
+            return HtmlPage.GetHtml("Поиск", html.ToString());
         }
         catch
         {
-            return HtmlPage.GetHtml("", "Ошибка поиска");
+            return HtmlPage.GetHtml("Ошибка", "Ошибка поиска");
         }
     }
 
@@ -81,11 +81,11 @@ public class Controller
                 }));
             }));
 
-            return HtmlPage.GetHtml("", html.ToString());
+            return HtmlPage.GetHtml("Пользователь", html.ToString());
         }
         catch
         {
-            return HtmlPage.GetHtml("", "Человек не найден");
+            return HtmlPage.GetHtml("Ошибка", "Человек не найден");
         }
     }
 
@@ -139,11 +139,11 @@ public class Controller
                 }));
             }));
 
-            return HtmlPage.GetHtml("", html.ToString());
+            return HtmlPage.GetHtml("Организация", html.ToString());
         }
         catch
         {
-            return HtmlPage.GetHtml("", "Организация не найдена");
+            return HtmlPage.GetHtml("Ошибка", "Организация не найдена");
         }
     }
 }

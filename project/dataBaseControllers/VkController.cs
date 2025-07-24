@@ -67,7 +67,7 @@ public class VkController : DefaultController
         {
             return xHtml.ToString();
         }
-        return HtmlPage.GetField("", xHtml.ToString());
+        return HtmlPage.GetField("Вконтакте", xHtml.ToString());
     }
 
     public string CreateHtml(int start, int step)
