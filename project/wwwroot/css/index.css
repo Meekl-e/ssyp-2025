@@ -8,6 +8,13 @@ head {
     font-family: Calibri;
 }
 
+.header {
+    height: auto;
+    width: 100%;
+    background-color: #ffebb6;
+    justify-content: space-between;
+}
+
 .my-article {
     border-radius: 10px;
     margin: 20px 12px 20px 12px;
@@ -23,6 +30,7 @@ head {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    height: auto;
 }
 
 
@@ -48,9 +56,7 @@ head {
 
 }
 
-.contetn12 {
-    width: 470px;
-}
+
 
 .btn-new {
     border-radius: 10px;
@@ -66,7 +72,7 @@ head {
 }
 
 .search {
-    margin-right: 650px;
+    margin-right: auto;
     margin-top: 10px;
 }
 
@@ -104,7 +110,10 @@ head {
     .my-container_w {
         font-size: 14px;
     }
-    .h1_diz {
+}
+@media (max-width: 1250px) {
+    .header {
+        height: 100px;
     }
 }
 
@@ -127,7 +136,7 @@ head {
 
 .h1_diz {
     /*margin-top: 25px;*/
-    margin-left: 550px;
+    margin-left: auto;
     margin-right: 0px;
 }
 
