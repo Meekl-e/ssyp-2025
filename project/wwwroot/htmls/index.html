@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" href="/datasets/image/logossyp.png">
 
     <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel='stylesheet' href='css/index.css'>
     <script src='javascripts/script.js'></script>
 
@@ -19,83 +20,71 @@
 <div class='my-container_w' style='width:100%;height: 100px; background-color: #ffebb6;justify-content: space-between;'>
 
 
-    <a href='/?vkN=1802&tgN=708&oBN=32&cNewsN=75&academCN=6&elementyN=0&ershArch=37'> <img src='/datasets/image/logossyp.png' style='height:50px;margin-left: 16px;margin-top: 5px;'> </a>
+    <a href='/'> <img src='/datasets/image/logossyp.png' style='height:50px;margin-left: 16px;margin-top: 5px;'> </a>
 
 
 
 
-
-
-        <div class = 'search'>syp_search?search=
-            <form style="margin-left: 110px" action="search" method="get">
-                <input type="text" name="search" placeholder="Поиск...">
-                <button type="submit" class="btn-new">Искать</button>
-                <input id="Ershov" type="checkbox">
-                <label for="Ershov">БЗ Ершова</label>
-
-                <input id="vk_cb" name="vkN" type="checkbox">
-                <label for="vk_cb">БЗ ВК</label>
-
-                <div class="tg_label_diz">
-                    <input id="tg_cb" type="checkbox">
-                    <label for="tg_cb">БЗ ТГ</label>
-                </div>
-
-                <div class="tg_label_diz2">
-                    <input id="old_bz" type="checkbox">
-                    <label for="old_bz">БЗ со старыми мастерскими</label>
-                </div>
-
-                <div class="new_cnews_diz">
-                    <input id="cNews1" type="checkbox">
-                    <label for="cNews1">Новости cNews</label>
-                </div>
-
-                <input id="ac_cb" type="checkbox">
-                <label for="ac_cb">Новости Академгородка</label>
-
-                <input id="elementy_cb" type="checkbox">
-                <label for="elementy_cb">Элементи</label>
-            </form>
-
-
-        </div>
 
 
     <div class='my-container_w'>
 
-        <a href='/vk/' style='margin: 0px 6px 0px 6px; font-size: 15px'>ВКонтакте</a> |
-        <a href='/tg/' style='margin: 0px 6px 0px 6px; font-size: 15px'>Телеграм</a> |
-        <a href='/old_base/' style='margin: 0px 6px 0px 6px; font-size: 15px'>Старая БЗ</a> |
-        <a href='/cnews/' style='margin: 0px 6px 0px 6px; font-size: 15px'>Новости</a> |
-        <a href='/academcity/' style='margin: 0px 6px 0px 6px; font-size: 15px'>Новости Академгородка</a> |
-        <a href='/' style='margin: 0px 6px 0px 6px; font-size: 15px'>Обновить</a> |
-
-
-
-
-
-
+        <a href='/vk/' class="link">ВКонтакте</a> |
+        <a href='/tg/' class="link">Телеграм</a> |
+        <a href='/old_base/' class="link">Старая БЗ</a> |
+        <a href='/cnews/'class="link">Новости</a> |
+        <a href='/academcity/'class="link">Новости Академгородка</a> |
+        <a href='/' class="link">Обновить</a> |
+        <div class="h1_diz"><h1>Окна в мир ЛШЮП, сезон 2025 года</h1>Окна созданы мастерской №3 'Веб и сервисы</div>
     </div>
-    <div class='my-container' style='font-size:small;'>
-
+    <div class='my-container_w' style='font-size:small;'>
         <span> +7 (383) 330-80-51 +7 (913) 713-27-64</span>
-        <a href='https://t.me/LSHUP'> <img style="margin-top: 3px" src='/datasets/image/logotelegram.png' height='20'></a>
-        <a href='https://vk.com/lshup'> <img style="margin-top: 3px" src='/datasets/image/logoVK.png' height='20'> </a>
+        <a href='https://t.me/LSHUP'> <img style="margin-top: 3px;" src='/datasets/image/logotelegram.png' height='20'></a>
+        <a href='https://vk.com/lshup'> <img style="margin-top: 3px " src='/datasets/image/logoVK.png' height='20'> </a>
 
     </div>
 </div>
 
 </div>
+<!--style='display:flex;flex-direction:column;margin-left: 40px;'-->
 
 
 
 
-<div style='display:flex;flex-direction:column;margin-left: 40px;'>
-    <div class="h1_diz"><h1>Окна в мир ЛШЮП, сезон 2025 года</h1></div>
-        <div style='font-size: large; margin-top: 20px; margin-left: 550px; margin-right: 0px '>Окна созданы мастерской №3 'Веб и сервисы'</div>
+<div class = 'search'>
+<!--    syp_search?search=-->
+    <form style="margin-left: 110px" action="search" method="get">
+        <input type="text" name="search" placeholder="Поиск...">
+
+        <input id="Ershov" name="ershArch" type="checkbox">
+        <label for="Ershov">БЗ Ершова</label>
+
+        <input id="vk_cb" name="vkN" type="checkbox">
+        <label for="vk_cb">БЗ ВК</label>
+
+        <input id="tg_cb" name="tgN" type="checkbox">
+        <label for="tg_cb">БЗ ТГ</label>
+
+
+
+            <input id="old_bz" name="oBN" type="checkbox">
+            <label for="old_bz">БЗ со старыми мастерскими</label>
+
+
+
+            <input id="cNews1" name="cNewsN" type="checkbox">
+            <label for="cNews1">Новости cNews</label>
+
+
+        <input id="ac_cb" name="academCN" type="checkbox">
+        <label for="ac_cb">Новости Академгородка</label>
+
+        <input id="elementy_cb" name="elementyN" type="checkbox">
+        <label for="elementy_cb">Элементи</label>
+        <button type="submit" class="btn-new">Искать</button>
+    </form>
+
 </div>
-
 
 
 <div class = "blurred" id ="blurred_el">
@@ -160,7 +149,7 @@
                      style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
                 </div>
                 <h3 class='my-art-heading'>Элементи</h3>
-                <iframe style="width: 500px; min-height: 500px;" src="/elementy_field?num={{ elementy }}"></iframe>
+                <iframe style="width: 500px; min-height: 500px;" src="/elementy_main_field?num={{ elementy }}"></iframe>
             </div>
         </div>
     </div>
@@ -170,7 +159,7 @@
             <div class='rubrika' style=''>База данных</div>
             <h3 class='my-art-heading' style=''>Телеграм</h3>
 
-            <iframe style="width: 500px; min-height: 500px;" src="/tg_field?num={{ tg }}"></iframe>
+            <iframe style="width: 500px; min-height: 500px;" src="/tg_main_field?num={{ tg }}"></iframe>
         </div>
     </div>
     </div>
@@ -183,7 +172,7 @@
                  style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
             </div>
             <h3 class='my-art-heading'>ВКонтакте</h3>
-            <iframe style="width: 500px; min-height: 500px;" src="/vk_field?num={{ vk }}"></iframe>
+            <iframe style="width: 500px; min-height: 500px;" src="/vk_main_field?num={{ vk }}"></iframe>
 
 
         </div>
@@ -196,7 +185,7 @@
                          style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
                     </div>
                     <h3 class='my-art-heading'>Старая база данных</h3>
-                    <iframe style="width: 500px; min-height: 500px;" src="/old_base_field?num={{ oB }}"></iframe>
+                    <iframe style="width: 500px; min-height: 500px;" src="/old_base_main_field?num={{ oB }}"></iframe>
                 </div>
             </div>
         </div>
@@ -207,7 +196,7 @@
                          style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
                     </div>
                     <h3 class='my-art-heading'>CNews</h3>
-                    <iframe style="width: 500px; min-height: 500px;" src="/cnews_field?num={{ cNews }}"></iframe>
+                    <iframe style="width: 500px; min-height: 500px;" src="/cnews_main_field?num={{ cNews }}"></iframe>
                 </div>
             </div>
         </div>
@@ -218,7 +207,7 @@
                          style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
                     </div>
                     <h3 class='my-art-heading'>Новости Академгородка</h3>
-                    <iframe style="width: 500px; min-height: 500px;" src="/academcity_field?num={{ academC }}"></iframe>
+                    <iframe style="width: 500px; min-height: 500px;" src="/academcity_main_field?num={{ academC }}"></iframe>
                 </div>
             </div>
         </div>
@@ -230,7 +219,7 @@
                      style='width:100%; background-color:#ffebb6; font-size:large; color:white; color: black; '>База данных
                 </div>
                 <h3 class='my-art-heading'>Архив Ершова</h3>
-                <iframe style="width: 500px; min-height: 500px;" src="/ershov_archive_field?num={{ ershArch }}"></iframe>
+                <iframe style="width: 500px; min-height: 500px;" src="/ershov_archive_main_field?num={{ ershArch }}"></iframe>
             </div>
         </div>
     </div>
