@@ -14,14 +14,12 @@ class ErshovArchiveView : DefaultView
     {
         if (request.Query.ContainsKey("search"))
         {
-            string query_search = request.Query["search"];
-            if (query_search != null && query_search != "")
+            if (request.Query["search"].ToString() != null && request.Query["search"].ToString() != "")
             {
-                return ershov_controller.Search(query_search.Split(" "));
+                return ershov_controller.Search(request.Query["search"].ToString().Split(" "));
             }
         }
         return JsonSerializer.Serialize("");
-
     }
 
     public IResult GetResult(HttpRequest request)

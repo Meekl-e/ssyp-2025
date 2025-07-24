@@ -46,17 +46,22 @@ public class VkController : DefaultController
         {
             return new XElement(new XElement("div",
                         new XElement("i", new XAttribute("style", "color: gray"),
-                        new XText(new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(post.Elements().Single(x => x.Name.LocalName == "date").Value)).ToShortDateString())),
+                        new XText(new DateTime(1970, 1, 1).AddSeconds(Int32.Parse(post
+                            .Elements().Single(x => x.Name.LocalName == "date").Value)).ToShortDateString())),
                         new XElement("br"),
-                        new XText(ConvertBase64(post.Elements().Single(x => x.Name.LocalName == "text").Value)),
+                        new XText(ConvertBase64(post.
+                            Elements().Single(x => x.Name.LocalName == "text").Value)),
                         new XElement("br"),
                         xDB.Elements().Select(r =>
                         {
                             if (r.Name.LocalName == "media")
                             {
-                                if (r.Elements().Single(x => x.Name.LocalName == "post").Attribute($"{rdf}resource")?.Value == post.Attribute($"{rdf}about")?.Value)
+                                if (r.Elements().Single(x => x.Name.LocalName == "post")
+                                    .Attribute($"{rdf}resource")?.Value
+                                    == post.Attribute($"{rdf}about")?.Value)
                                 {
-                                    return new XElement("img", new XAttribute("style", "width:465px;"), new XAttribute("src", ConvertBase64(r.Elements().Single(x => x.Name.LocalName == "url").Value)));
+                                    return new XElement("img", new XAttribute("style", "width:465px;"), new XAttribute("src", ConvertBase64(r
+                                        .Elements().Single(x => x.Name.LocalName == "url").Value)));
                                 }
                                 return null;
                             }

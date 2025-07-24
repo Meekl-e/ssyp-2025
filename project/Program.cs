@@ -16,12 +16,10 @@ app.MapGet("/tg/", (HttpRequest request) => tgView.GetResult(request));
 app.MapGet("/tg_field/", (HttpRequest request) => tgView.GetFieldResult(request));
 app.MapGet("/tg_main_field/", (HttpRequest request) => tgView.GetMainFieldResult(request));
 
-
 OldBaseView oldBaseView = new();
 app.MapGet("/old_base/", (HttpRequest request) => oldBaseView.GetResult(request));
 app.MapGet("/old_base_field/", (HttpRequest request) => oldBaseView.GetFieldResult(request));
 app.MapGet("/old_base_main_field/", (HttpRequest request) => oldBaseView.GetMainFieldResult(request));
-
 
 RssView cNView = new("cnews");
 app.MapGet("/cnews/", (HttpRequest request) => cNView.GetResult(request));
@@ -43,14 +41,12 @@ app.MapGet("/ershov_archive/", (HttpRequest request) => ershovArchiveView.GetRes
 app.MapGet("/ershov_archive_field/", (HttpRequest request) => ershovArchiveView.GetFieldResult(request));
 app.MapGet("/ershov_archive_main_field/", (HttpRequest request) => ershovArchiveView.GetMainFieldResult(request));
 
-
 View view = new();
 app.MapGet("/syp_search", (HttpRequest request) => view.GetResult(request));
 
 app.MapGet("/person", (HttpRequest request) => view.GetPersonResult(request));
 
 app.MapGet("/studio", (HttpRequest request) => view.GetStudioResult(request));
-
 
 MainPageView mainPageView = new(ref vkView, ref tgView,ref oldBaseView, ref cNView, ref aCView, ref elView, ref ershovArchiveView );
 app.MapGet("/", (HttpRequest request) => mainPageView.GetResult(request));
