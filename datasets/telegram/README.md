@@ -20,7 +20,7 @@ ID| date | text | views | Media
 
 [https://docs.google.com/spreadsheets/d/12OhmW7UWUHXsOi1mrSyczMs2UBHHcoPKnJ1pt3sFGAI](https://docs.google.com/spreadsheets/d/12OhmW7UWUHXsOi1mrSyczMs2UBHHcoPKnJ1pt3sFGAI) - аналогичная таблица с автоматическим обновлением.
 
-Отличие в том, что есть столбец `url_file`, который соотвествует ID файлу на Google диске в папке: `https://drive.google.com/drive/folders/1gJq3hOfp0oilUjqENgJtjrdg6GRtHWF9?usp=drive_link`
+Отличие в том, что есть столбец `url_file`, который соотвествует ID файлу на Google диске в папке: [https://drive.google.com/drive/folders/1gJq3hOfp0oilUjqENgJtjrdg6GRtHWF9?usp=drive_link](https://drive.google.com/drive/folders/1gJq3hOfp0oilUjqENgJtjrdg6GRtHWF9?usp=drive_link)
 
 ### Подключение к API 
 TODO: дописать
