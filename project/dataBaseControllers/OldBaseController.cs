@@ -35,7 +35,7 @@ public class OldBaseController : DefaultController
     {
         string spreadsheetId = "1NmIcu_vEI8ETwqaO1nHbaIykiko6vtB2tQaKTeQ7YiE";
         string range = "Sheet1!A:M";
-        string apiKey = "AIzaSyDqDdzU6h-JUqxxLVXDeoL1ei9FZsj8IXA";
+        string apiKey = File.ReadAllText(".env");
 
         string url = $"https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}?key={apiKey}";
 
