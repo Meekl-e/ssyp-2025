@@ -38,7 +38,7 @@ public class TgController : DefaultController
     {
         string spreadsheetId = "12OhmW7UWUHXsOi1mrSyczMs2UBHHcoPKnJ1pt3sFGAI";
         string range = "Лист1!A:F";
-        string apiKey = File.ReadAllText(".env");
+        string apiKey = File.ReadAllText("api_key.env");
 
         string url = $"https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values/{range}?key={apiKey}";
 
